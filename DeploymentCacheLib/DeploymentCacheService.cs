@@ -15,6 +15,7 @@ namespace DeploymentCacheLib
             DeploymentCacheResponse cacheResponse = new DeploymentCacheResponse();
 
             cacheResponse.FileName = @"D:\TestZip\File10mb_0.zip";
+            //cacheResponse.FileName = @"C:\Users\thshanmu\Desktop\Team\Run-From-Zip\Hello.zip";
 
             cacheResponse.FileContents = File.ReadAllBytes(cacheResponse.FileName);
             cacheResponse.FileLength = cacheResponse.FileContents.Length;

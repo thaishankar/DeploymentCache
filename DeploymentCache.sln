@@ -3,14 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeploymentCacheLib", "DeploymentCacheLib\DeploymentCacheLib.csproj", "{C29DD7C8-A787-41A3-990D-10A553B38CE8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeploymentCacheClient", "DeploymentCacheClient\DeploymentCacheClient.csproj", "{E7A4BD8B-E83C-47F0-AEE0-4C79ADC3AE3E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6F2B7300-7754-47DE-95D8-1878B0A1522E} = {6F2B7300-7754-47DE-95D8-1878B0A1522E}
+		{C29DD7C8-A787-41A3-990D-10A553B38CE8} = {C29DD7C8-A787-41A3-990D-10A553B38CE8}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeploymentCacheHost", "DeploymentCacheHost\DeploymentCacheHost.csproj", "{6F2B7300-7754-47DE-95D8-1878B0A1522E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeploymentCacheClient", "DeploymentCacheClient\DeploymentCacheClient.csproj", "{E7A4BD8B-E83C-47F0-AEE0-4C79ADC3AE3E}"
-	ProjectSection(ProjectDependencies) = postProject
-		{C29DD7C8-A787-41A3-990D-10A553B38CE8} = {C29DD7C8-A787-41A3-990D-10A553B38CE8}
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeploymentCacheLib", "DeploymentCacheLib\DeploymentCacheLib.csproj", "{C29DD7C8-A787-41A3-990D-10A553B38CE8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,18 +19,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C29DD7C8-A787-41A3-990D-10A553B38CE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C29DD7C8-A787-41A3-990D-10A553B38CE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C29DD7C8-A787-41A3-990D-10A553B38CE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C29DD7C8-A787-41A3-990D-10A553B38CE8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6F2B7300-7754-47DE-95D8-1878B0A1522E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6F2B7300-7754-47DE-95D8-1878B0A1522E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6F2B7300-7754-47DE-95D8-1878B0A1522E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6F2B7300-7754-47DE-95D8-1878B0A1522E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E7A4BD8B-E83C-47F0-AEE0-4C79ADC3AE3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E7A4BD8B-E83C-47F0-AEE0-4C79ADC3AE3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7A4BD8B-E83C-47F0-AEE0-4C79ADC3AE3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7A4BD8B-E83C-47F0-AEE0-4C79ADC3AE3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F2B7300-7754-47DE-95D8-1878B0A1522E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F2B7300-7754-47DE-95D8-1878B0A1522E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F2B7300-7754-47DE-95D8-1878B0A1522E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F2B7300-7754-47DE-95D8-1878B0A1522E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C29DD7C8-A787-41A3-990D-10A553B38CE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C29DD7C8-A787-41A3-990D-10A553B38CE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C29DD7C8-A787-41A3-990D-10A553B38CE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C29DD7C8-A787-41A3-990D-10A553B38CE8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

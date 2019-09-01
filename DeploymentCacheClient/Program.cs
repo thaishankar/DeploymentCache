@@ -17,8 +17,7 @@ namespace CacheClient
         {
 
             string clienIp;
-            SUPPORTED_BINDINGS bindingToUse;
-            string outFile = "1.zip";
+            string outFile = "OutFile.zip";
 
             if (args.Length >= 1)
             {
@@ -29,33 +28,17 @@ namespace CacheClient
                 clienIp = Constants.CLIENT_IP_ADDRESS;
             }
 
-            if (args.Length >= 2)
+            if(args.Length >= 2)
             {
-                bindingToUse = (SUPPORTED_BINDINGS)Int32.Parse(args[1]);
-            }
-            else
-            {
-                bindingToUse = SUPPORTED_BINDINGS.NETTCP;
-            }
-
-            if(args.Length >= 3)
-            {
-                outFile = args[2];
+                outFile = args[1];
             }
 
             DeploymentCacheOperationsClient cacheOperationsClient = null;
-            EndpointAddress endpointAddress = CacheClientHelper.BuildEndPointAddress(clienIp, bindingToUse);
+            EndpointAddress endpointAddress = CacheClientHelper.BuildEndPointAddress(clienIp, SUPPORTED_BINDINGS.NETTCP);
 
             Console.WriteLine("Endpoint {0}", endpointAddress);
 
-            if (bindingToUse == SUPPORTED_BINDINGS.NETTCP)
-            { 
-                cacheOperationsClient = new DeploymentCacheOperationsClient(CacheClientHelper.ConfiguredNetTcpBinding(), endpointAddress);
-            }
-            else if (bindingToUse == SUPPORTED_BINDINGS.WSHTTP)
-            {
-                cacheOperationsClient = new DeploymentCacheOperationsClient(CacheClientHelper.ConfiguredWsHttpBinding(), endpointAddress);
-            }
+            cacheOperationsClient = new DeploymentCacheOperationsClient(CacheClientHelper.ConfiguredNetTcpBinding(), endpointAddress);
 
             if (cacheOperationsClient == null)
             {
