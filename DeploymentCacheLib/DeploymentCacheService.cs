@@ -11,10 +11,12 @@ namespace DeploymentCacheLib
 {
     // Keep one ServiceContext so as to maintain cache states.
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, 
-                      ConcurrencyMode = ConcurrencyMode.Multiple)]
+                      ConcurrencyMode = ConcurrencyMode.Multiple,
+                      IncludeExceptionDetailInFaults = true,
+                      UseSynchronizationContext = true)]
     public class DeploymentCacheService : IDeploymentCacheOperations
     {
-        private ContentCache contentCache = new ContentCache(@"D:\Cache", 3);
+        private ContentCache contentCache = new ContentCache(@"C:\Cache", 300);
 
         public DeploymentCacheResponse GetZipFileForSite(DeploymentCacheRequest cacheRequest)
         {
@@ -38,14 +40,16 @@ namespace DeploymentCacheLib
             return cacheResponse;
         }
 
-        public CacheRefreshResponse RefreshCacheForSite(DeploymentCacheRequest cacheRequest)
+        public DeploymentCacheResponse RefreshCacheForSite(DeploymentCacheRequest cacheRequest)
         {
-            CacheRefreshResponse refreshResponse = new CacheRefreshResponse();
+            DeploymentCacheResponse cacheRefreshResponse = new DeploymentCacheResponse();
 
-            refreshResponse.FileName = "refreshResponse";
-            refreshResponse.FileLength = 10;
+            cacheRefreshResponse.SiteName = cacheRequest.SiteName;
+            contentCache.UpdateSite(cacheRequest.RootDirectory, cacheRequest.StorageVolumePath);
+            cacheRefreshResponse.FileContents = contentCache.GetSiteContent(cacheRequest.RootDirectory);
+            cacheRefreshResponse.FileLength = cacheRefreshResponse.FileContents.Length;
 
-            return refreshResponse;
+            return cacheRefreshResponse;
         }
 
         public DeleteFromCacheResponse DeleteCacheForSite(DeploymentCacheRequest cacheRequest)

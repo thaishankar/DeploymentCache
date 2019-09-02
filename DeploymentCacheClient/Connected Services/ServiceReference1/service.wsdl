@@ -48,6 +48,12 @@
   <wsdl:message name="IDeploymentCacheOperations_RefreshCacheForSite_OutputMessage">
     <wsdl:part name="parameters" element="tns:RefreshCacheForSiteResponse" />
   </wsdl:message>
+  <wsdl:message name="IDeploymentCacheOperations_DeleteCacheForSite_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteCacheForSite" />
+  </wsdl:message>
+  <wsdl:message name="IDeploymentCacheOperations_DeleteCacheForSite_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteCacheForSiteResponse" />
+  </wsdl:message>
   <wsdl:portType name="IDeploymentCacheOperations">
     <wsdl:operation name="GetZipFileForSite">
       <wsdl:input wsaw:Action="http://tempuri.org/IDeploymentCacheOperations/GetZipFileForSite" message="tns:IDeploymentCacheOperations_GetZipFileForSite_InputMessage" />
@@ -56,6 +62,10 @@
     <wsdl:operation name="RefreshCacheForSite">
       <wsdl:input wsaw:Action="http://tempuri.org/IDeploymentCacheOperations/RefreshCacheForSite" message="tns:IDeploymentCacheOperations_RefreshCacheForSite_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IDeploymentCacheOperations/RefreshCacheForSiteResponse" message="tns:IDeploymentCacheOperations_RefreshCacheForSite_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCacheForSite">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDeploymentCacheOperations/DeleteCacheForSite" message="tns:IDeploymentCacheOperations_DeleteCacheForSite_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDeploymentCacheOperations/DeleteCacheForSiteResponse" message="tns:IDeploymentCacheOperations_DeleteCacheForSite_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IDeploymentCacheOperations" type="tns:IDeploymentCacheOperations">
@@ -72,6 +82,15 @@
     </wsdl:operation>
     <wsdl:operation name="RefreshCacheForSite">
       <soap12:operation soapAction="http://tempuri.org/IDeploymentCacheOperations/RefreshCacheForSite" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCacheForSite">
+      <soap12:operation soapAction="http://tempuri.org/IDeploymentCacheOperations/DeleteCacheForSite" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

@@ -173,15 +173,17 @@ namespace StorageCacheLib
                 long siteUpdateDelta = _cacheStorage.UpdateSite(siteRoot, storageVolume);
 
 
-                if (newSpaceNeeded != siteUpdateDelta)
-                {
-                    // Something went wrong
-                    Console.WriteLine(string.Format("Update for site '{0}' saw a different size delta than expected (expected: {1}, actual: {2})", siteRoot, newSpaceNeeded, siteUpdateDelta));
-                }
-                else
-                {
-                    Console.WriteLine("Updated site in Cache. SiteRoot: {0}", siteRoot);
-                }
+                //if (newSpaceNeeded != siteUpdateDelta)
+                //{
+                //    // Something went wrong
+                //    //Console.WriteLine(string.Format("Update for site '{0}' saw a different size delta than expected (expected: {1}, actual: {2})", siteRoot, newSpaceNeeded, siteUpdateDelta));
+                //    throw new Exception(string.Format("Update for site '{0}' saw a different size delta than expected (expected: {1}, actual: {2})", siteRoot, newSpaceNeeded, siteUpdateDelta));
+                //}
+                //else
+                //{
+                //    Console.WriteLine("Updated site in Cache. SiteRoot: {0}", siteRoot);
+                //}
+                //Console.WriteLine("Updated site in Cache. SiteRoot: {0}", siteRoot);
             }
             finally
             {

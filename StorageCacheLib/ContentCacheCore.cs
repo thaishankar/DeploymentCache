@@ -90,16 +90,18 @@ namespace StorageCacheLib
 
         public bool UpdateSite(string siteRoot, string storageVolume)
         {
-            try
-            {
-                return _diskCache.UpdateSite(siteRoot, storageVolume);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Exception Updating siteRoot in Cache: {0}. Ex: {1}", siteRoot, e.ToString());
-            }
+            return _diskCache.UpdateSite(siteRoot, storageVolume);
 
-            return false;
+            //try
+            //{
+            //    return _diskCache.UpdateSite(siteRoot, storageVolume);
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine("Exception Updating siteRoot in Cache: {0}. Ex: {1}", siteRoot, e.ToString());
+            //}
+
+            //return false;
 
             //// Update the RAM Cache only if it exists in it currently (Since Updates will also allocate if not present yet)
             //if (_ramCache.Contains(siteRoot))
@@ -112,16 +114,18 @@ namespace StorageCacheLib
 
         public bool AddSite(string siteRoot, string storageVolume, bool addToRamCache = false)
         {
-            try
-            {
-                return _diskCache.AddSite(siteRoot, storageVolume);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Exception Adding siteRoot in Cache: {0}. Ex: {1}", siteRoot, e.ToString());
-            }
+            return _diskCache.AddSite(siteRoot, storageVolume);
 
-            return false;
+            //try
+            //{
+            //    return _diskCache.AddSite(siteRoot, storageVolume);
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine("Exception Adding siteRoot in Cache: {0}. Ex: {1}", siteRoot, e.ToString());
+            //}
+
+            //return false;
 
 
             //// Only directly add to the RAM cache if requested since it's a lot smaller

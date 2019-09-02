@@ -185,21 +185,15 @@ namespace DeploymentCacheClient.ServiceReference1 {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CacheRefreshResponse", Namespace="http://schemas.datacontract.org/2004/07/DeploymentCacheLib")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="DeleteFromCacheResponse", Namespace="http://schemas.datacontract.org/2004/07/DeploymentCacheLib")]
     [System.SerializableAttribute()]
-    public partial class CacheRefreshResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class DeleteFromCacheResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int FileLengthField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string FileNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool IsRefreshSuccessfulField;
+        private bool IsDeleteSuccessfulField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string SiteNameField;
@@ -215,40 +209,14 @@ namespace DeploymentCacheClient.ServiceReference1 {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int FileLength {
+        public bool IsDeleteSuccessful {
             get {
-                return this.FileLengthField;
+                return this.IsDeleteSuccessfulField;
             }
             set {
-                if ((this.FileLengthField.Equals(value) != true)) {
-                    this.FileLengthField = value;
-                    this.RaisePropertyChanged("FileLength");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FileName {
-            get {
-                return this.FileNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.FileNameField, value) != true)) {
-                    this.FileNameField = value;
-                    this.RaisePropertyChanged("FileName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool IsRefreshSuccessful {
-            get {
-                return this.IsRefreshSuccessfulField;
-            }
-            set {
-                if ((this.IsRefreshSuccessfulField.Equals(value) != true)) {
-                    this.IsRefreshSuccessfulField = value;
-                    this.RaisePropertyChanged("IsRefreshSuccessful");
+                if ((this.IsDeleteSuccessfulField.Equals(value) != true)) {
+                    this.IsDeleteSuccessfulField = value;
+                    this.RaisePropertyChanged("IsDeleteSuccessful");
                 }
             }
         }
@@ -287,10 +255,16 @@ namespace DeploymentCacheClient.ServiceReference1 {
         System.Threading.Tasks.Task<DeploymentCacheClient.ServiceReference1.DeploymentCacheResponse> GetZipFileForSiteAsync(DeploymentCacheClient.ServiceReference1.DeploymentCacheRequest cacheRequest);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDeploymentCacheOperations/RefreshCacheForSite", ReplyAction="http://tempuri.org/IDeploymentCacheOperations/RefreshCacheForSiteResponse")]
-        DeploymentCacheClient.ServiceReference1.CacheRefreshResponse RefreshCacheForSite(DeploymentCacheClient.ServiceReference1.DeploymentCacheRequest cacheRequest);
+        DeploymentCacheClient.ServiceReference1.DeploymentCacheResponse RefreshCacheForSite(DeploymentCacheClient.ServiceReference1.DeploymentCacheRequest cacheRequest);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDeploymentCacheOperations/RefreshCacheForSite", ReplyAction="http://tempuri.org/IDeploymentCacheOperations/RefreshCacheForSiteResponse")]
-        System.Threading.Tasks.Task<DeploymentCacheClient.ServiceReference1.CacheRefreshResponse> RefreshCacheForSiteAsync(DeploymentCacheClient.ServiceReference1.DeploymentCacheRequest cacheRequest);
+        System.Threading.Tasks.Task<DeploymentCacheClient.ServiceReference1.DeploymentCacheResponse> RefreshCacheForSiteAsync(DeploymentCacheClient.ServiceReference1.DeploymentCacheRequest cacheRequest);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDeploymentCacheOperations/DeleteCacheForSite", ReplyAction="http://tempuri.org/IDeploymentCacheOperations/DeleteCacheForSiteResponse")]
+        DeploymentCacheClient.ServiceReference1.DeleteFromCacheResponse DeleteCacheForSite(DeploymentCacheClient.ServiceReference1.DeploymentCacheRequest cacheRequest);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDeploymentCacheOperations/DeleteCacheForSite", ReplyAction="http://tempuri.org/IDeploymentCacheOperations/DeleteCacheForSiteResponse")]
+        System.Threading.Tasks.Task<DeploymentCacheClient.ServiceReference1.DeleteFromCacheResponse> DeleteCacheForSiteAsync(DeploymentCacheClient.ServiceReference1.DeploymentCacheRequest cacheRequest);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -328,12 +302,20 @@ namespace DeploymentCacheClient.ServiceReference1 {
             return base.Channel.GetZipFileForSiteAsync(cacheRequest);
         }
         
-        public DeploymentCacheClient.ServiceReference1.CacheRefreshResponse RefreshCacheForSite(DeploymentCacheClient.ServiceReference1.DeploymentCacheRequest cacheRequest) {
+        public DeploymentCacheClient.ServiceReference1.DeploymentCacheResponse RefreshCacheForSite(DeploymentCacheClient.ServiceReference1.DeploymentCacheRequest cacheRequest) {
             return base.Channel.RefreshCacheForSite(cacheRequest);
         }
         
-        public System.Threading.Tasks.Task<DeploymentCacheClient.ServiceReference1.CacheRefreshResponse> RefreshCacheForSiteAsync(DeploymentCacheClient.ServiceReference1.DeploymentCacheRequest cacheRequest) {
+        public System.Threading.Tasks.Task<DeploymentCacheClient.ServiceReference1.DeploymentCacheResponse> RefreshCacheForSiteAsync(DeploymentCacheClient.ServiceReference1.DeploymentCacheRequest cacheRequest) {
             return base.Channel.RefreshCacheForSiteAsync(cacheRequest);
+        }
+        
+        public DeploymentCacheClient.ServiceReference1.DeleteFromCacheResponse DeleteCacheForSite(DeploymentCacheClient.ServiceReference1.DeploymentCacheRequest cacheRequest) {
+            return base.Channel.DeleteCacheForSite(cacheRequest);
+        }
+        
+        public System.Threading.Tasks.Task<DeploymentCacheClient.ServiceReference1.DeleteFromCacheResponse> DeleteCacheForSiteAsync(DeploymentCacheClient.ServiceReference1.DeploymentCacheRequest cacheRequest) {
+            return base.Channel.DeleteCacheForSiteAsync(cacheRequest);
         }
     }
 }

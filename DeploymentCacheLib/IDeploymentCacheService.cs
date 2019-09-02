@@ -15,7 +15,7 @@ namespace DeploymentCacheLib
         DeploymentCacheResponse GetZipFileForSite(DeploymentCacheRequest cacheRequest);
 
         [OperationContract]
-        CacheRefreshResponse RefreshCacheForSite(DeploymentCacheRequest cacheRequest);
+        DeploymentCacheResponse RefreshCacheForSite(DeploymentCacheRequest cacheRequest);
 
         [OperationContract]
         DeleteFromCacheResponse DeleteCacheForSite(DeploymentCacheRequest cacheRequest);
@@ -90,42 +90,42 @@ namespace DeploymentCacheLib
     }
 
 
-    [DataContract]
-    public class CacheRefreshResponse
-    {
-        string siteName;
-        string fileName;
-        int fileLength;
-        bool isRefreshSuccessful;
+    //[DataContract]
+    //public class CacheRefreshResponse
+    //{
+    //    string siteName;
+    //    string fileName;
+    //    int fileLength;
+    //    bool isRefreshSuccessful;
 
-        [DataMember]
-        public string SiteName
-        {
-            get { return siteName; }
-            set { siteName = value; }
-        }
+    //    [DataMember]
+    //    public string SiteName
+    //    {
+    //        get { return siteName; }
+    //        set { siteName = value; }
+    //    }
 
-        [DataMember]
-        public string FileName
-        {
-            get { return fileName; }
-            set { fileName = value; }
-        }
+    //    [DataMember]
+    //    public string FileName
+    //    {
+    //        get { return fileName; }
+    //        set { fileName = value; }
+    //    }
 
-        [DataMember]
-        public int FileLength
-        {
-            get { return fileLength; }
-            set { fileLength = value; }
-        }
+    //    [DataMember]
+    //    public int FileLength
+    //    {
+    //        get { return fileLength; }
+    //        set { fileLength = value; }
+    //    }
 
-        [DataMember]
-        public bool IsRefreshSuccessful
-        {
-            get { return isRefreshSuccessful; }
-            set { isRefreshSuccessful = value; }
-        }
-    }
+    //    [DataMember]
+    //    public bool IsRefreshSuccessful
+    //    {
+    //        get { return isRefreshSuccessful; }
+    //        set { isRefreshSuccessful = value; }
+    //    }
+    //}
 
     [DataContract]
     public class DeleteFromCacheResponse

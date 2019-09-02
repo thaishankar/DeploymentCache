@@ -25,7 +25,21 @@
   <xs:element name="RefreshCacheForSiteResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" minOccurs="0" name="RefreshCacheForSiteResult" nillable="true" type="q4:CacheRefreshResponse" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" minOccurs="0" name="RefreshCacheForSiteResult" nillable="true" type="q4:DeploymentCacheResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteCacheForSite">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" minOccurs="0" name="cacheRequest" nillable="true" type="q5:DeploymentCacheRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteCacheForSiteResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" minOccurs="0" name="DeleteCacheForSiteResult" nillable="true" type="q6:DeleteFromCacheResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

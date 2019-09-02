@@ -59,7 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Connected Services\ServiceReference1\DeploymentCacheClient.ServiceReference1.CacheRefreshResponse.datasource">
+    <None Include="Connected Services\ServiceReference1\DeploymentCacheClient.ServiceReference1.DeleteFromCacheResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\ServiceReference1\DeploymentCacheClient.ServiceReference1.DeploymentCacheResponse.datasource">

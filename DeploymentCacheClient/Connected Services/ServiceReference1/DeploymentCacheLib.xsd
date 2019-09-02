@@ -17,13 +17,11 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="DeploymentCacheResponse" nillable="true" type="tns:DeploymentCacheResponse" />
-  <xs:complexType name="CacheRefreshResponse">
+  <xs:complexType name="DeleteFromCacheResponse">
     <xs:sequence>
-      <xs:element minOccurs="0" name="FileLength" type="xs:int" />
-      <xs:element minOccurs="0" name="FileName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="IsRefreshSuccessful" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsDeleteSuccessful" type="xs:boolean" />
       <xs:element minOccurs="0" name="SiteName" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="CacheRefreshResponse" nillable="true" type="tns:CacheRefreshResponse" />
+  <xs:element name="DeleteFromCacheResponse" nillable="true" type="tns:DeleteFromCacheResponse" />
 </xs:schema>

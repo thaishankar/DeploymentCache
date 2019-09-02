@@ -48,22 +48,32 @@ namespace CacheClient
 
             DeploymentCacheRequest cacheRequest = new DeploymentCacheRequest();
 
-            cacheRequest.SiteName = "testSite";
-            cacheRequest.StorageVolumePath = @"D:\";
-            cacheRequest.RootDirectory = "home";
+            //cacheRequest.SiteName = "testSite";
+            //cacheRequest.StorageVolumePath = @"D:\";
+            //cacheRequest.RootDirectory = "home";
+
+            cacheRequest.SiteName = "thsite";
+            cacheRequest.StorageVolumePath = @"\\10.218.0.7\volume-4-default";
+            cacheRequest.RootDirectory = @"8ae6c87deafffb4cbfef\b9eab18c5e654fce8b543e554ca56891";
 
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
 
+            int count = 5;
             while (true)
             {
                 DeploymentCacheResponse cacheResponse = cacheOperationsClient.GetZipFileForSite(cacheRequest);
 
                 Console.WriteLine("Response: File: {0} Size: {1}", cacheResponse.FileName, cacheResponse.FileContents.Length);
 
-                cacheResponse = cacheOperationsClient.GetZipFileForSite(cacheRequest);
+                cacheResponse = cacheOperationsClient.RefreshCacheForSite(cacheRequest);
 
-                Console.WriteLine("Response: File: {0} Size: {1}", cacheResponse.FileName, cacheResponse.FileContents.Length);
+                Console.WriteLine("Refresh Cache File: {0} Size: {1}", cacheResponse.FileName, cacheResponse.FileContents.Length);
+
+                DeploymentCacheRequest deleteFromCacheRequest = new DeploymentCacheRequest();
+                deleteFromCacheRequest.RootDirectory = "home";
+                cacheOperationsClient.DeleteCacheForSite(deleteFromCacheRequest);
+
             }
 
             //long downloadTime = stopWatch.ElapsedMilliseconds;
@@ -77,5 +87,22 @@ namespace CacheClient
 
             //Console.WriteLine("Download time = {0}ms, WriteTime: {1} TotalTime: {2}", downloadTime, endTime - downloadTime, endTime);
         }
+
+        //static void Main(string[] args)
+        //{
+
+        //    DeploymentCacheRequest cacheRequest = new DeploymentCacheRequest();
+
+        //    cacheRequest.SiteName = "thsite";
+        //    cacheRequest.StorageVolumePath = @"\\10.218.0.7\volume-4-default";
+        //    cacheRequest.RootDirectory = @"8ae6c87deafffb4cbfef\b9eab18c5e654fce8b543e554ca56891";
+
+        //    Path.Combine(cacheRequest.StorageVolumePath, cacheRequest.RootDirectory);
+
+
+        //    ContentCache contentCache = new ContentCache(@"D:\Cache", 3);
+        //    contentCache.AddSite(cacheRequest.RootDirectory, cacheRequest.StorageVolumePath);
+        //    contentCache.UpdateSite(cacheRequest.RootDirectory, cacheRequest.StorageVolumePath);
+        //}
     }
 }
