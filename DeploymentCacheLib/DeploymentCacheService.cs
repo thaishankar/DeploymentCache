@@ -5,19 +5,34 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using StorageCacheLib;
 
 namespace DeploymentCacheLib
 {
+    // Keep one ServiceContext so as to maintain cache states.
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, 
+                      ConcurrencyMode = ConcurrencyMode.Multiple)]
     public class DeploymentCacheService : IDeploymentCacheOperations
     {
+        private ContentCache contentCache = new ContentCache(@"D:\Cache", 3);
+
         public DeploymentCacheResponse GetZipFileForSite(DeploymentCacheRequest cacheRequest)
         {
             DeploymentCacheResponse cacheResponse = new DeploymentCacheResponse();
 
-            cacheResponse.FileName = @"D:\TestZip\File10mb_0.zip";
-            //cacheResponse.FileName = @"C:\Users\thshanmu\Desktop\Team\Run-From-Zip\Hello.zip";
 
-            cacheResponse.FileContents = File.ReadAllBytes(cacheResponse.FileName);
+            cacheResponse.SiteName = cacheRequest.SiteName;
+
+            if(contentCache.Contains(cacheRequest.RootDirectory))
+            {
+                cacheResponse.FileContents = contentCache.GetSiteContent(cacheRequest.RootDirectory);
+            }
+            else
+            {
+                contentCache.AddSite(cacheRequest.RootDirectory, cacheRequest.StorageVolumePath);
+                cacheResponse.FileContents = contentCache.GetSiteContent(cacheRequest.RootDirectory);
+            }
+
             cacheResponse.FileLength = cacheResponse.FileContents.Length;
 
             return cacheResponse;
@@ -33,5 +48,14 @@ namespace DeploymentCacheLib
             return refreshResponse;
         }
 
+        public DeleteFromCacheResponse DeleteCacheForSite(DeploymentCacheRequest cacheRequest)
+        {
+            DeleteFromCacheResponse deleteFromCacheResponse = new DeleteFromCacheResponse();
+
+            contentCache.DropSite(cacheRequest.RootDirectory);
+            deleteFromCacheResponse.IsDeleteSuccessful = true;
+
+            return deleteFromCacheResponse;
+        }
     }
 }

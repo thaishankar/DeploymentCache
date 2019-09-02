@@ -17,8 +17,8 @@ namespace DeploymentCacheLib
         [OperationContract]
         CacheRefreshResponse RefreshCacheForSite(DeploymentCacheRequest cacheRequest);
 
-        //[OperationContract]
-        //DeleteFromCacheResponse DeleteCacheForSite(DeploymentCacheRequest cacheRequest);
+        [OperationContract]
+        DeleteFromCacheResponse DeleteCacheForSite(DeploymentCacheRequest cacheRequest);
 
         // TODO: Add Async Operations for these
     }

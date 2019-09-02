@@ -13,7 +13,7 @@ namespace DeploymentCacheHost
     {
         static void Main(string[] args)
         {
-            // Step 1: Create a URI to serve as the base address.s
+            // Step 1: Create a URI to serve as the base address.
             Uri baseAddress = new Uri("http://localhost:8000/DeploymentCache/");
 
             // Step 2: Create a ServiceHost instance.
@@ -27,7 +27,7 @@ namespace DeploymentCacheHost
 
                 // Step 3: Add a service endpoint.
                 selfHost.AddServiceEndpoint(typeof(IDeploymentCacheOperations), netTcpBinding, "net.tcp://localhost:8002/DeploymentCache/");
-
+                
                 // Step 4: Enable metadata exchange.
                 ServiceMetadataBehavior smb = new ServiceMetadataBehavior();
                 smb.HttpGetEnabled = true;

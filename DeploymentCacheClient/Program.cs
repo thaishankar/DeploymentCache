@@ -8,6 +8,7 @@ using System.ServiceModel.Channels;
 using System.Text;
 using System.Threading.Tasks;
 using DeploymentCacheClient.ServiceReference1;
+using StorageCacheLib;
 
 namespace CacheClient
 {
@@ -28,7 +29,7 @@ namespace CacheClient
                 clienIp = Constants.CLIENT_IP_ADDRESS;
             }
 
-            if(args.Length >= 2)
+            if (args.Length >= 2)
             {
                 outFile = args[1];
             }
@@ -47,21 +48,34 @@ namespace CacheClient
 
             DeploymentCacheRequest cacheRequest = new DeploymentCacheRequest();
 
+            cacheRequest.SiteName = "testSite";
+            cacheRequest.StorageVolumePath = @"D:\";
+            cacheRequest.RootDirectory = "home";
+
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
 
-            DeploymentCacheResponse cacheResponse = cacheOperationsClient.GetZipFileForSite(cacheRequest);
+            while (true)
+            {
+                DeploymentCacheResponse cacheResponse = cacheOperationsClient.GetZipFileForSite(cacheRequest);
 
-            long downloadTime = stopWatch.ElapsedMilliseconds;
+                Console.WriteLine("Response: File: {0} Size: {1}", cacheResponse.FileName, cacheResponse.FileContents.Length);
 
-            Console.WriteLine(cacheResponse.FileName + " " + cacheResponse.FileLength);
+                cacheResponse = cacheOperationsClient.GetZipFileForSite(cacheRequest);
 
-            string outPath = outFile;
-            File.WriteAllBytes(outPath, cacheResponse.FileContents);
+                Console.WriteLine("Response: File: {0} Size: {1}", cacheResponse.FileName, cacheResponse.FileContents.Length);
+            }
 
-            long endTime = stopWatch.ElapsedMilliseconds;
+            //long downloadTime = stopWatch.ElapsedMilliseconds;
 
-            Console.WriteLine("Download time = {0}ms, WriteTime: {1} TotalTime: {2}", downloadTime, endTime - downloadTime, endTime);
+            //Console.WriteLine(cacheResponse.FileName + " " + cacheResponse.FileLength);
+
+            //string outPath = outFile;
+            //File.WriteAllBytes(outPath, cacheResponse.FileContents);
+
+            //long endTime = stopWatch.ElapsedMilliseconds;
+
+            //Console.WriteLine("Download time = {0}ms, WriteTime: {1} TotalTime: {2}", downloadTime, endTime - downloadTime, endTime);
         }
     }
 }
