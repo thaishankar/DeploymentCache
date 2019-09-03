@@ -10,13 +10,13 @@ namespace StorageCacheLib
 {
     public class ContentCache
     {
-        public const int FreeRamMinimumBufferMB = 300;
-        private const int RamCheckIntervalMs = 20 * 1000;
+        //public const int FreeRamMinimumBufferMB = 300;
+        //private const int RamCheckIntervalMs = 20 * 1000;
 
-        public int MaxDiskCacheCapacityMB { get => _diskCache.MaxCapacityMB; }
-        public int DiskCacheOccupancyMB { get => _diskCache.OccupancyMB; }
-        public string DiskCacheDirectory { get => _diskCacheStorage.CacheDir; }
-        public int RamCacheMaxCapacity;
+        //public int MaxDiskCacheCapacityMB { get => _diskCache.MaxCapacityMB; }
+        //public int DiskCacheOccupancyMB { get => _diskCache.OccupancyMB; }
+        //public string DiskCacheDirectory { get => _diskCacheStorage.CacheDir; }
+        //public int RamCacheMaxCapacity;
 
         private FileSystemStorage _diskCacheStorage;
         private LruCache _diskCache;
@@ -31,26 +31,18 @@ namespace StorageCacheLib
             _diskCacheStorage = new FileSystemStorage(diskCacheDirectory);
             _diskCache = new LruCache(_diskCacheStorage, maxDiskCacheCapacityMB);
 
+            ClearCache();
+
             ////Ram Cache Settings/Work
             //_currentRamCacheMaxSizeMB = GetNewRamCacheMaxSizeMB();
             //_ramCacheStorage = new RamStorage();
-            //Console.WriteLine("Creating RamCache with initial Capacity Limit to {0} MB", _currentRamCacheMaxSizeMB);
             //_ramCache = new LruCache(_ramCacheStorage, _currentRamCacheMaxSizeMB);
             //_ramSizeCheckTimer = new Timer(RamCacheSizeAdjuster, null, RamCheckIntervalMs, RamCheckIntervalMs);
         }
         
         public bool Contains(string siteRoot)
         {
-            try
-            {
-                return _diskCache.Contains(siteRoot);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Exception checking if siteRoot in Cache: {0}. Ex: {1}", siteRoot, e.ToString());
-            }
-
-            return false;
+            return _diskCache.Contains(siteRoot);
 
             //// Check the RAM cache first since it's faster
             //if (_ramCache.Contains(siteRoot))
@@ -66,16 +58,7 @@ namespace StorageCacheLib
 
         public byte[] GetSiteContent(string siteRoot)
         {
-            try
-            {
-                return _diskCache.GetSiteContent(siteRoot);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Exception Getting content for siteRoot in Cache: {0}. Ex: {1}", siteRoot, e.ToString());
-            }
-
-            return null;
+           return _diskCache.GetSiteContent(siteRoot);
 
             //// Serve from RAM cache if it's present there
             //if (_ramCache.Contains(siteRoot))
@@ -88,7 +71,7 @@ namespace StorageCacheLib
             //}
         }
 
-        public bool UpdateSite(string siteRoot, string storageVolume)
+        public byte[] UpdateSite(string siteRoot, string storageVolume)
         {
             return _diskCache.UpdateSite(siteRoot, storageVolume);
 
@@ -98,7 +81,6 @@ namespace StorageCacheLib
             //}
             //catch (Exception e)
             //{
-            //    Console.WriteLine("Exception Updating siteRoot in Cache: {0}. Ex: {1}", siteRoot, e.ToString());
             //}
 
             //return false;
@@ -112,21 +94,9 @@ namespace StorageCacheLib
 
         }
 
-        public bool AddSite(string siteRoot, string storageVolume, bool addToRamCache = false)
+        public byte[] AddSite(string siteRoot, string storageVolume, bool addToRamCache = false)
         {
             return _diskCache.AddSite(siteRoot, storageVolume);
-
-            //try
-            //{
-            //    return _diskCache.AddSite(siteRoot, storageVolume);
-            //}
-            //catch (Exception e)
-            //{
-            //    Console.WriteLine("Exception Adding siteRoot in Cache: {0}. Ex: {1}", siteRoot, e.ToString());
-            //}
-
-            //return false;
-
 
             //// Only directly add to the RAM cache if requested since it's a lot smaller
             //if (addToRamCache)
@@ -199,6 +169,11 @@ namespace StorageCacheLib
             _diskCache.Clear();
         }
 
+        public CacheStats GetCacheStats()
+        {
+            return _diskCache.GetCacheStats();
+        }
+
         //private int GetNewRamCacheMaxSizeMB()
         //{
         //    PerformanceCounter availableMemoryCounter = new PerformanceCounter("Memory", "Available MBytes");
@@ -214,10 +189,42 @@ namespace StorageCacheLib
         //private void RamCacheSizeAdjuster(object unusedState)
         //{
         //    int newRamCacheMaxSizeMB = GetNewRamCacheMaxSizeMB();
-        //    Console.WriteLine("Updating RamCache Capacity Limit to {0} MB", newRamCacheMaxSizeMB);
 
         //    _ramCache.AdjustMaxCapacity(newRamCacheMaxSizeMB);
         //    _currentRamCacheMaxSizeMB = newRamCacheMaxSizeMB;
         //}
+    }
+
+    public class CacheStats
+    {
+        long numberOfSitesInCache;
+        long cacheCapacityBytes;
+        long cacheFreeSpaceBytes;
+        long cacheUsedSpaceBytes;
+
+        public long NumberOfSitesInCache
+        {
+            get { return numberOfSitesInCache; }
+        }
+        public long CacheCapacityBytes
+        {
+            get { return cacheCapacityBytes; }
+        }
+        public long CacheFreeSpaceBytes
+        {
+            get { return cacheFreeSpaceBytes; }
+        }
+        public long CacheUsedSpaceBytes
+        {
+            get { return cacheUsedSpaceBytes; }
+        }
+
+        public CacheStats(long numberOfSites, long capacityBytes, long freeSpaceBytes, long usedSpaceBytes)
+        {
+            numberOfSitesInCache = numberOfSites;
+            cacheCapacityBytes = capacityBytes;
+            cacheFreeSpaceBytes = freeSpaceBytes;
+            cacheUsedSpaceBytes = usedSpaceBytes;
+        }
     }
 }

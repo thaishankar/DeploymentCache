@@ -185,6 +185,99 @@ namespace DeploymentCacheClient.ServiceReference1 {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="DeploymentCacheFault", Namespace="http://schemas.datacontract.org/2004/07/DeploymentCacheLib")]
+    [System.SerializableAttribute()]
+    public partial class DeploymentCacheFault : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DetailsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string RootDirectoryField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string StackTraceField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string StorageVolumePathField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Details {
+            get {
+                return this.DetailsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DetailsField, value) != true)) {
+                    this.DetailsField = value;
+                    this.RaisePropertyChanged("Details");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string RootDirectory {
+            get {
+                return this.RootDirectoryField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RootDirectoryField, value) != true)) {
+                    this.RootDirectoryField = value;
+                    this.RaisePropertyChanged("RootDirectory");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string StackTrace {
+            get {
+                return this.StackTraceField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StackTraceField, value) != true)) {
+                    this.StackTraceField = value;
+                    this.RaisePropertyChanged("StackTrace");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string StorageVolumePath {
+            get {
+                return this.StorageVolumePathField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StorageVolumePathField, value) != true)) {
+                    this.StorageVolumePathField = value;
+                    this.RaisePropertyChanged("StorageVolumePath");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="DeleteFromCacheResponse", Namespace="http://schemas.datacontract.org/2004/07/DeploymentCacheLib")]
     [System.SerializableAttribute()]
     public partial class DeleteFromCacheResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -244,27 +337,142 @@ namespace DeploymentCacheClient.ServiceReference1 {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="DeploymentCacheStats", Namespace="http://schemas.datacontract.org/2004/07/DeploymentCacheLib")]
+    [System.SerializableAttribute()]
+    public partial class DeploymentCacheStats : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long CacheCapacityBytesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long CacheFreeSpaceBytesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long CacheUsedSpaceBytesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long NumberOfSitesInCacheField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long CacheCapacityBytes {
+            get {
+                return this.CacheCapacityBytesField;
+            }
+            set {
+                if ((this.CacheCapacityBytesField.Equals(value) != true)) {
+                    this.CacheCapacityBytesField = value;
+                    this.RaisePropertyChanged("CacheCapacityBytes");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long CacheFreeSpaceBytes {
+            get {
+                return this.CacheFreeSpaceBytesField;
+            }
+            set {
+                if ((this.CacheFreeSpaceBytesField.Equals(value) != true)) {
+                    this.CacheFreeSpaceBytesField = value;
+                    this.RaisePropertyChanged("CacheFreeSpaceBytes");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long CacheUsedSpaceBytes {
+            get {
+                return this.CacheUsedSpaceBytesField;
+            }
+            set {
+                if ((this.CacheUsedSpaceBytesField.Equals(value) != true)) {
+                    this.CacheUsedSpaceBytesField = value;
+                    this.RaisePropertyChanged("CacheUsedSpaceBytes");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long NumberOfSitesInCache {
+            get {
+                return this.NumberOfSitesInCacheField;
+            }
+            set {
+                if ((this.NumberOfSitesInCacheField.Equals(value) != true)) {
+                    this.NumberOfSitesInCacheField = value;
+                    this.RaisePropertyChanged("NumberOfSitesInCache");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference1.IDeploymentCacheOperations")]
     public interface IDeploymentCacheOperations {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDeploymentCacheOperations/GetZipFileForSite", ReplyAction="http://tempuri.org/IDeploymentCacheOperations/GetZipFileForSiteResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(DeploymentCacheClient.ServiceReference1.DeploymentCacheFault), Action="http://tempuri.org/IDeploymentCacheOperations/GetZipFileForSiteDeploymentCacheFau" +
+            "ltFault", Name="DeploymentCacheFault", Namespace="http://schemas.datacontract.org/2004/07/DeploymentCacheLib")]
         DeploymentCacheClient.ServiceReference1.DeploymentCacheResponse GetZipFileForSite(DeploymentCacheClient.ServiceReference1.DeploymentCacheRequest cacheRequest);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDeploymentCacheOperations/GetZipFileForSite", ReplyAction="http://tempuri.org/IDeploymentCacheOperations/GetZipFileForSiteResponse")]
         System.Threading.Tasks.Task<DeploymentCacheClient.ServiceReference1.DeploymentCacheResponse> GetZipFileForSiteAsync(DeploymentCacheClient.ServiceReference1.DeploymentCacheRequest cacheRequest);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDeploymentCacheOperations/RefreshCacheForSite", ReplyAction="http://tempuri.org/IDeploymentCacheOperations/RefreshCacheForSiteResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(DeploymentCacheClient.ServiceReference1.DeploymentCacheFault), Action="http://tempuri.org/IDeploymentCacheOperations/RefreshCacheForSiteDeploymentCacheF" +
+            "aultFault", Name="DeploymentCacheFault", Namespace="http://schemas.datacontract.org/2004/07/DeploymentCacheLib")]
         DeploymentCacheClient.ServiceReference1.DeploymentCacheResponse RefreshCacheForSite(DeploymentCacheClient.ServiceReference1.DeploymentCacheRequest cacheRequest);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDeploymentCacheOperations/RefreshCacheForSite", ReplyAction="http://tempuri.org/IDeploymentCacheOperations/RefreshCacheForSiteResponse")]
         System.Threading.Tasks.Task<DeploymentCacheClient.ServiceReference1.DeploymentCacheResponse> RefreshCacheForSiteAsync(DeploymentCacheClient.ServiceReference1.DeploymentCacheRequest cacheRequest);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDeploymentCacheOperations/DeleteCacheForSite", ReplyAction="http://tempuri.org/IDeploymentCacheOperations/DeleteCacheForSiteResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(DeploymentCacheClient.ServiceReference1.DeploymentCacheFault), Action="http://tempuri.org/IDeploymentCacheOperations/DeleteCacheForSiteDeploymentCacheFa" +
+            "ultFault", Name="DeploymentCacheFault", Namespace="http://schemas.datacontract.org/2004/07/DeploymentCacheLib")]
         DeploymentCacheClient.ServiceReference1.DeleteFromCacheResponse DeleteCacheForSite(DeploymentCacheClient.ServiceReference1.DeploymentCacheRequest cacheRequest);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDeploymentCacheOperations/DeleteCacheForSite", ReplyAction="http://tempuri.org/IDeploymentCacheOperations/DeleteCacheForSiteResponse")]
         System.Threading.Tasks.Task<DeploymentCacheClient.ServiceReference1.DeleteFromCacheResponse> DeleteCacheForSiteAsync(DeploymentCacheClient.ServiceReference1.DeploymentCacheRequest cacheRequest);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDeploymentCacheOperations/ClearCache", ReplyAction="http://tempuri.org/IDeploymentCacheOperations/ClearCacheResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(DeploymentCacheClient.ServiceReference1.DeploymentCacheFault), Action="http://tempuri.org/IDeploymentCacheOperations/ClearCacheDeploymentCacheFaultFault" +
+            "", Name="DeploymentCacheFault", Namespace="http://schemas.datacontract.org/2004/07/DeploymentCacheLib")]
+        void ClearCache();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDeploymentCacheOperations/ClearCache", ReplyAction="http://tempuri.org/IDeploymentCacheOperations/ClearCacheResponse")]
+        System.Threading.Tasks.Task ClearCacheAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDeploymentCacheOperations/GetDeploymentCacheStats", ReplyAction="http://tempuri.org/IDeploymentCacheOperations/GetDeploymentCacheStatsResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(DeploymentCacheClient.ServiceReference1.DeploymentCacheFault), Action="http://tempuri.org/IDeploymentCacheOperations/GetDeploymentCacheStatsDeploymentCa" +
+            "cheFaultFault", Name="DeploymentCacheFault", Namespace="http://schemas.datacontract.org/2004/07/DeploymentCacheLib")]
+        DeploymentCacheClient.ServiceReference1.DeploymentCacheStats GetDeploymentCacheStats();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDeploymentCacheOperations/GetDeploymentCacheStats", ReplyAction="http://tempuri.org/IDeploymentCacheOperations/GetDeploymentCacheStatsResponse")]
+        System.Threading.Tasks.Task<DeploymentCacheClient.ServiceReference1.DeploymentCacheStats> GetDeploymentCacheStatsAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -316,6 +524,22 @@ namespace DeploymentCacheClient.ServiceReference1 {
         
         public System.Threading.Tasks.Task<DeploymentCacheClient.ServiceReference1.DeleteFromCacheResponse> DeleteCacheForSiteAsync(DeploymentCacheClient.ServiceReference1.DeploymentCacheRequest cacheRequest) {
             return base.Channel.DeleteCacheForSiteAsync(cacheRequest);
+        }
+        
+        public void ClearCache() {
+            base.Channel.ClearCache();
+        }
+        
+        public System.Threading.Tasks.Task ClearCacheAsync() {
+            return base.Channel.ClearCacheAsync();
+        }
+        
+        public DeploymentCacheClient.ServiceReference1.DeploymentCacheStats GetDeploymentCacheStats() {
+            return base.Channel.GetDeploymentCacheStats();
+        }
+        
+        public System.Threading.Tasks.Task<DeploymentCacheClient.ServiceReference1.DeploymentCacheStats> GetDeploymentCacheStatsAsync() {
+            return base.Channel.GetDeploymentCacheStatsAsync();
         }
     }
 }

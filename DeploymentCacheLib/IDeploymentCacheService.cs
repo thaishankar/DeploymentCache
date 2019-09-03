@@ -12,13 +12,24 @@ namespace DeploymentCacheLib
     public interface IDeploymentCacheOperations
     {
         [OperationContract]
+        [FaultContract(typeof(DeploymentCacheFault))]
         DeploymentCacheResponse GetZipFileForSite(DeploymentCacheRequest cacheRequest);
 
         [OperationContract]
+        [FaultContract(typeof(DeploymentCacheFault))]
         DeploymentCacheResponse RefreshCacheForSite(DeploymentCacheRequest cacheRequest);
 
         [OperationContract]
+        [FaultContract(typeof(DeploymentCacheFault))]
         DeleteFromCacheResponse DeleteCacheForSite(DeploymentCacheRequest cacheRequest);
+
+        [OperationContract]
+        [FaultContract(typeof(DeploymentCacheFault))]
+        void ClearCache();
+
+        [OperationContract]
+        [FaultContract(typeof(DeploymentCacheFault))]
+        DeploymentCacheStats GetDeploymentCacheStats();
 
         // TODO: Add Async Operations for these
     }
@@ -89,44 +100,6 @@ namespace DeploymentCacheLib
         }
     }
 
-
-    //[DataContract]
-    //public class CacheRefreshResponse
-    //{
-    //    string siteName;
-    //    string fileName;
-    //    int fileLength;
-    //    bool isRefreshSuccessful;
-
-    //    [DataMember]
-    //    public string SiteName
-    //    {
-    //        get { return siteName; }
-    //        set { siteName = value; }
-    //    }
-
-    //    [DataMember]
-    //    public string FileName
-    //    {
-    //        get { return fileName; }
-    //        set { fileName = value; }
-    //    }
-
-    //    [DataMember]
-    //    public int FileLength
-    //    {
-    //        get { return fileLength; }
-    //        set { fileLength = value; }
-    //    }
-
-    //    [DataMember]
-    //    public bool IsRefreshSuccessful
-    //    {
-    //        get { return isRefreshSuccessful; }
-    //        set { isRefreshSuccessful = value; }
-    //    }
-    //}
-
     [DataContract]
     public class DeleteFromCacheResponse
     {
@@ -145,6 +118,89 @@ namespace DeploymentCacheLib
         {
             get { return isDeleteSuccessful; }
             set { isDeleteSuccessful = value; }
+        }
+    }
+
+    [DataContract]
+    public class DeploymentCacheStats
+    {
+        long numberOfSitesInCache;
+        long cacheCapacityBytes;
+        long cacheFreeSpaceBytes;
+        long cacheUsedSpaceBytes;
+
+        [DataMember]
+        public long NumberOfSitesInCache
+        {
+            get { return numberOfSitesInCache; }
+            set { numberOfSitesInCache = value; }
+        }
+
+        [DataMember]
+        public long CacheCapacityBytes
+        {
+            get { return cacheCapacityBytes; }
+            set { cacheCapacityBytes = value; }
+        }
+
+        [DataMember]
+        public long CacheFreeSpaceBytes
+        {
+            get { return cacheFreeSpaceBytes; }
+            set { cacheFreeSpaceBytes = value; }
+        }
+
+        [DataMember]
+        public long CacheUsedSpaceBytes
+        {
+            get { return cacheUsedSpaceBytes; }
+            set { cacheUsedSpaceBytes = value; }
+        }
+    }
+
+    [DataContract]
+    public class DeploymentCacheFault
+    {
+        private string rootDirectory;
+        private string storageVolumePath;
+        private string details;
+        private string stackTrace;
+
+        [DataMember]
+        public string RootDirectory
+        {
+            get { return rootDirectory; }
+            set { rootDirectory = value; }
+        }
+
+        [DataMember]
+        public string StorageVolumePath
+        {
+            get { return storageVolumePath; }
+            set { storageVolumePath = value; }
+        }
+
+        [DataMember]
+        public string Details
+        {
+            get { return details; }
+            set { details = value; }
+        }
+
+
+        [DataMember]
+        public string StackTrace
+        {
+            get { return stackTrace; }
+            set { stackTrace = value; }
+        }
+
+        public DeploymentCacheFault(string details, string rootDirectory = "", string storageVolume = "", string stackTrace = "")
+        {
+            RootDirectory = rootDirectory;
+            StorageVolumePath = storageVolume;
+            Details = details;
+            StackTrace = stackTrace;
         }
     }
 }

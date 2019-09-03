@@ -63,7 +63,7 @@ namespace StorageCacheLib
             return present;
         }
 
-        public bool AddSite(string siteRoot, string storageVolume)
+        public byte[] AddSite(string siteRoot, string storageVolume)
         {
             // TODO: Check if this call can be avoided. Looks like an extra access to storage volume would be done here.
             // Get the size of the new zip
@@ -71,7 +71,7 @@ namespace StorageCacheLib
 
             if (siteContentSize == -1)
             {
-                return false;
+                return null;
             }
 
             // Lock the cache state
@@ -79,11 +79,9 @@ namespace StorageCacheLib
 
             try
             {
-                // Check that it doesn't already exist
                 if (_stateIndex.ContainsKey(siteRoot))
                 {
-                    // Already cached -> Assume this call was part of a parallel add/race -> done
-                    return true;
+                    return _cacheStorage.GetSiteContent(siteRoot);
                 }
 
                 // Make space if needed
@@ -101,20 +99,16 @@ namespace StorageCacheLib
 
                 // Have enough space currently
                 // Add the site to the storage component
-                _cacheStorage.AddSite(siteRoot, storageVolume);
-
-                Console.WriteLine("Added site to Cache. SiteRoot: {0}", siteRoot);
+                return _cacheStorage.AddSite(siteRoot, storageVolume);
             }
             finally
             {
                 // Unlock the cache state
                 _stateLock.ExitWriteLock();
             }
-
-            return true;
         }
 
-        public bool UpdateSite(string siteRoot, string storageVolume)
+        public byte[] UpdateSite(string siteRoot, string storageVolume)
         {
             // TODO: Check if this call can be avoided. Looks like an extra access to storage volume would be done here.
             // Get the size of the new zip
@@ -122,7 +116,7 @@ namespace StorageCacheLib
 
             if (newSiteContentSize == -1)
             {
-                return false;
+                return null;
             }
 
             // Lock the cache state
@@ -132,16 +126,28 @@ namespace StorageCacheLib
             {
                 // Get the size of the old (current local) copy
                 long oldSiteContentSize;
+
+                // Have enough space currently
+                // Update the site's info in the eviction control state
+                LinkedListNode<string> siteRecencyNode;
                 if (_stateIndex.ContainsKey(siteRoot))
                 {
                     // Site is currently cached -> Get the size of the current copy
                     oldSiteContentSize = _cacheStorage.GetCacheSizeForSite(siteRoot);
+
+                    siteRecencyNode = _stateIndex[siteRoot];
+                    _recencyState.Remove(siteRecencyNode);
                 }
                 else
                 {
                     // Site is not curently cached
                     oldSiteContentSize = 0;
+                    siteRecencyNode = new LinkedListNode<string>(siteRoot);
+                    _stateIndex.Add(siteRoot, siteRecencyNode);
                 }
+
+                // Make this a recently accessed site
+                _recencyState.AddFirst(siteRecencyNode);
 
                 // Figure out how much space (if any needs to be made)
                 long newSpaceNeeded = newSiteContentSize - oldSiteContentSize;
@@ -152,44 +158,13 @@ namespace StorageCacheLib
                     long spaceFreed = TryToMakeSpace(newSpaceNeeded);
                 }
 
-                // Have enough space currently
-                // Update the site's info in the eviction control state
-                LinkedListNode<string> siteRecencyNode;
-
-                if (_stateIndex.ContainsKey(siteRoot))
-                {
-                    siteRecencyNode = _stateIndex[siteRoot];
-                    _recencyState.Remove(siteRecencyNode);
-                }
-                else
-                {
-                    siteRecencyNode = new LinkedListNode<string>(siteRoot);
-                    _stateIndex.Add(siteRoot, siteRecencyNode);
-
-                }
-                _recencyState.AddFirst(siteRecencyNode);
-
                 // Update the site in the storage component (Update will also add if it doesn't exist)
-                long siteUpdateDelta = _cacheStorage.UpdateSite(siteRoot, storageVolume);
-
-
-                //if (newSpaceNeeded != siteUpdateDelta)
-                //{
-                //    // Something went wrong
-                //    //Console.WriteLine(string.Format("Update for site '{0}' saw a different size delta than expected (expected: {1}, actual: {2})", siteRoot, newSpaceNeeded, siteUpdateDelta));
-                //    throw new Exception(string.Format("Update for site '{0}' saw a different size delta than expected (expected: {1}, actual: {2})", siteRoot, newSpaceNeeded, siteUpdateDelta));
-                //}
-                //else
-                //{
-                //    Console.WriteLine("Updated site in Cache. SiteRoot: {0}", siteRoot);
-                //}
-                //Console.WriteLine("Updated site in Cache. SiteRoot: {0}", siteRoot);
+                return _cacheStorage.UpdateSite(siteRoot, storageVolume);
             }
             finally
             {
                 _stateLock.ExitWriteLock();
             }
-            return true;
         }
 
         public byte[] GetSiteContent(string siteRoot)
@@ -235,14 +210,8 @@ namespace StorageCacheLib
                     // Delete the local copy from the disk storage
                     _cacheStorage.DeleteSite(siteRoot);
 
-                    Console.WriteLine("Deleted Site from Cache. SiteRoot: {0}", siteRoot);
-
                     // Step down from write lock on the cache state
                     _stateLock.ExitWriteLock();
-                }
-                else
-                {
-                    Console.WriteLine(string.Format("Recieved a Delete request for non-cached site '{0}'", siteRoot));
                 }
             }
             finally
@@ -327,11 +296,18 @@ namespace StorageCacheLib
             
             if(spaceFreed < freeSpaceNeeded)
             {
-                Console.WriteLine("Not enough space in cahce to allocate the requested free space. FreeSpaceNeeded: {0}, SpaceFreed: {1}, CacheSize: {2}",
-                                                                freeSpaceNeeded, spaceFreed, _maxCapacityBytes);
+                throw new OutOfMemoryException(string.Format("Not enough space in cache to allocate the requested free space. FreeSpaceNeeded: {0}, SpaceFreed: {1}, CacheSize: {2}",
+                                                                freeSpaceNeeded, spaceFreed, _maxCapacityBytes));
             }
 
             return spaceFreed;
+        }
+
+        public CacheStats GetCacheStats()
+        {
+            CacheStats cacheStats = new CacheStats(_stateIndex.Count, _maxCapacityBytes, FreeSpaceInBytes, _cacheStorage.OccupancyInBytes);
+
+            return cacheStats;
         }
     }
 }

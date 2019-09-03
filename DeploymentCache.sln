@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeploymentCacheClient", "DeploymentCacheClient\DeploymentCacheClient.csproj", "{E7A4BD8B-E83C-47F0-AEE0-4C79ADC3AE3E}"
 	ProjectSection(ProjectDependencies) = postProject
 		{C29DD7C8-A787-41A3-990D-10A553B38CE8} = {C29DD7C8-A787-41A3-990D-10A553B38CE8}
+		{14ACA4FC-E0A4-4AD3-A0CC-2218D707B984} = {14ACA4FC-E0A4-4AD3-A0CC-2218D707B984}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeploymentCacheHost", "DeploymentCacheHost\DeploymentCacheHost.csproj", "{6F2B7300-7754-47DE-95D8-1878B0A1522E}"

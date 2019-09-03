@@ -18,7 +18,7 @@ namespace StorageCacheLib
         /// <param name="siteRoot"></param>
         /// <param name="content">The buffered form of the site's content (or null if it should be fetched from origin)</param>
         /// <returns>Size of the local copy (B)</returns>
-        long AddSite(string siteRoot, string storageVolume);
+        byte[] AddSite(string siteRoot, string storageVolume);
 
         /// <summary>
         /// Updates a site's local zip copy instance based on the current one designated in the site root
@@ -26,7 +26,7 @@ namespace StorageCacheLib
         /// <param name="siteRoot"></param>
         /// <param name="content">The buffered form of the newest verson of the site's content (or null if it should be fetched from origin)</param>
         /// <returns>The delta in occupied capacity (B)</returns>
-        long UpdateSite(string siteRoot, string storageVolume);
+        byte[] UpdateSite(string siteRoot, string storageVolume);
 
         /// <summary>
         /// Retrieves a byte array with the content from from the site

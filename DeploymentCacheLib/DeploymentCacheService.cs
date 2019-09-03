@@ -12,7 +12,7 @@ namespace DeploymentCacheLib
     // Keep one ServiceContext so as to maintain cache states.
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, 
                       ConcurrencyMode = ConcurrencyMode.Multiple,
-                      IncludeExceptionDetailInFaults = true,
+                      IncludeExceptionDetailInFaults = false,
                       UseSynchronizationContext = true)]
     public class DeploymentCacheService : IDeploymentCacheOperations
     {
@@ -22,17 +22,15 @@ namespace DeploymentCacheLib
         {
             DeploymentCacheResponse cacheResponse = new DeploymentCacheResponse();
 
-
             cacheResponse.SiteName = cacheRequest.SiteName;
 
-            if(contentCache.Contains(cacheRequest.RootDirectory))
+            cacheResponse.FileContents = contentCache.AddSite(cacheRequest.RootDirectory, cacheRequest.StorageVolumePath);
+
+            if (cacheResponse.FileContents == null)
             {
-                cacheResponse.FileContents = contentCache.GetSiteContent(cacheRequest.RootDirectory);
-            }
-            else
-            {
-                contentCache.AddSite(cacheRequest.RootDirectory, cacheRequest.StorageVolumePath);
-                cacheResponse.FileContents = contentCache.GetSiteContent(cacheRequest.RootDirectory);
+                // Failed to add site to Cache
+                DeploymentCacheFault df = new DeploymentCacheFault("Failed to add site to Cache. Could not get site content", cacheRequest.RootDirectory, cacheRequest.StorageVolumePath);
+                throw new FaultException<DeploymentCacheFault>(df);
             }
 
             cacheResponse.FileLength = cacheResponse.FileContents.Length;
@@ -45,8 +43,16 @@ namespace DeploymentCacheLib
             DeploymentCacheResponse cacheRefreshResponse = new DeploymentCacheResponse();
 
             cacheRefreshResponse.SiteName = cacheRequest.SiteName;
-            contentCache.UpdateSite(cacheRequest.RootDirectory, cacheRequest.StorageVolumePath);
-            cacheRefreshResponse.FileContents = contentCache.GetSiteContent(cacheRequest.RootDirectory);
+
+            cacheRefreshResponse.FileContents = contentCache.UpdateSite(cacheRequest.RootDirectory, cacheRequest.StorageVolumePath);
+
+            if (cacheRefreshResponse.FileContents == null)
+            {
+                // Failed to add site to Cache
+                DeploymentCacheFault df = new DeploymentCacheFault("Failed to Refersh site in Cache. Could not get site contents", cacheRequest.RootDirectory, cacheRequest.StorageVolumePath);
+                throw new FaultException<DeploymentCacheFault>(df);
+            }
+
             cacheRefreshResponse.FileLength = cacheRefreshResponse.FileContents.Length;
 
             return cacheRefreshResponse;
@@ -56,10 +62,53 @@ namespace DeploymentCacheLib
         {
             DeleteFromCacheResponse deleteFromCacheResponse = new DeleteFromCacheResponse();
 
-            contentCache.DropSite(cacheRequest.RootDirectory);
+            try
+            {
+                contentCache.DropSite(cacheRequest.RootDirectory);
+            }
+            catch (Exception e)
+            {
+                DeploymentCacheFault df = new DeploymentCacheFault("Failed to delete site from Cache.", cacheRequest.RootDirectory, cacheRequest.StorageVolumePath);
+                throw new FaultException<DeploymentCacheFault>(df);
+            }
+
             deleteFromCacheResponse.IsDeleteSuccessful = true;
 
             return deleteFromCacheResponse;
+        }
+
+        public void ClearCache()
+        {
+            try
+            {
+                contentCache.ClearCache();
+            }
+            catch (Exception e)
+            {
+                DeploymentCacheFault df = new DeploymentCacheFault("Failed to Clear Cache contents.");
+                throw new FaultException<DeploymentCacheFault>(df);
+            }
+        }
+
+        public DeploymentCacheStats GetDeploymentCacheStats()
+        {
+            DeploymentCacheStats deploymentCacheStats = new DeploymentCacheStats();
+            try
+            {
+                CacheStats cacheStatsFromStorage = contentCache.GetCacheStats();
+
+                deploymentCacheStats.NumberOfSitesInCache = cacheStatsFromStorage.NumberOfSitesInCache;
+                deploymentCacheStats.CacheCapacityBytes = cacheStatsFromStorage.CacheCapacityBytes;
+                deploymentCacheStats.CacheFreeSpaceBytes = cacheStatsFromStorage.CacheFreeSpaceBytes;
+                deploymentCacheStats.CacheUsedSpaceBytes = cacheStatsFromStorage.CacheUsedSpaceBytes;
+            }
+            catch(Exception e)
+            {
+                DeploymentCacheFault df = new DeploymentCacheFault("Failed to get Deployment Cache stats.");
+                throw new FaultException<DeploymentCacheFault>(df);
+            }
+
+            return deploymentCacheStats;
         }
     }
 }

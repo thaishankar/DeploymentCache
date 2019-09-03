@@ -10,8 +10,6 @@ namespace StorageCacheLib
 {
     internal class FileSystemStorage : ISiteCacheStorage
     {
-        private const int writeBufferSize = 512 * 1024;
-
         private long _occupancyBytes;
         private string _cacheDir;
 
@@ -44,14 +42,13 @@ namespace StorageCacheLib
             }
         }
 
-        public long AddSite(string siteRoot, string storageVolume)
+        public byte[] AddSite(string siteRoot, string storageVolume)
         {
             // Create the site subfolder in the cache
             string localSiteDirectory = GetLocalDirectoryPath(siteRoot);
             Directory.CreateDirectory(localSiteDirectory);
 
             // Make local copy of the current zip for the site
-            long localCopySize;
             string localFilePath;
 
             // Need to fetch the content from the origin
@@ -67,29 +64,24 @@ namespace StorageCacheLib
                 File.Copy(absoluteZipFilePath, localFilePath, true);
 
                 FileInfo localCopyInfo = new FileInfo(absoluteZipFilePath);
-                localCopySize = localCopyInfo.Length;
-            }
-            else
-            {
-                return 0;
-            }
+                _occupancyBytes += localCopyInfo.Length;
 
-            // Update the occupancy state
-            _occupancyBytes += localCopySize;
+                // If the site info is currently Cached, delete the record
+                if (_currentOccupancies.ContainsKey(siteRoot))
+                {
+                    _currentOccupancies.Remove(siteRoot);
 
-            // If the site info is currently Cached, delete the record
-            if (_currentOccupancies.ContainsKey(siteRoot))
-            {
-                _currentOccupancies.Remove(siteRoot);
-                
+                }
+
+                _currentOccupancies.Add(siteRoot, new FileMetadata(zipFileName, localCopyInfo.Length));
+
+                return File.ReadAllBytes(localFilePath);
             }
 
-            _currentOccupancies.Add(siteRoot, new FileMetadata(zipFileName, localCopySize));
-
-            return localCopySize;
+            return null;
         }
 
-        public long UpdateSite(string siteRoot, string storageVolume)
+        public byte[] UpdateSite(string siteRoot, string storageVolume)
         {
             // Delete the old one if present
             DeleteSite(siteRoot);
@@ -143,7 +135,15 @@ namespace StorageCacheLib
         {
             if (Directory.Exists(_cacheDir))
             {
-                Directory.Delete(_cacheDir, true);
+                try
+                {
+                    Directory.Delete(_cacheDir, true);
+                }
+                catch(IOException)
+                {
+                    // Not doing anything if there is a exception deleting directory. 
+                    // If for some reason delete fails, subsequent CreateDirectory will retain the directory.
+                }
             }
 
             Directory.CreateDirectory(_cacheDir);

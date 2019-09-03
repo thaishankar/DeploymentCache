@@ -43,4 +43,26 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="ClearCache">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ClearCacheResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDeploymentCacheStats">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDeploymentCacheStatsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" minOccurs="0" name="GetDeploymentCacheStatsResult" nillable="true" type="q7:DeploymentCacheStats" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

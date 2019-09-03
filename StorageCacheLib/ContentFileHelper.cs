@@ -79,7 +79,6 @@ namespace StorageCacheLib
             // Check if site Root Directory exists
             if(!Directory.Exists(sitePath))
             {
-                Console.WriteLine("Directory not found to add Zip to cache: {0}", sitePath);
                 return false;
             }
 
@@ -95,16 +94,16 @@ namespace StorageCacheLib
                 if (!File.Exists(currentVersionConfigFilepath))
                 {
                     // Neither one exists
-                    Console.WriteLine("File not found to add to cache: {0}", currentVersionConfigFilepath);
                     return false;
                 }
             }
 
             // Read the zip file name from siteverion.txt or packagename.txt
-            StreamReader currentVersionConfig = new StreamReader(currentVersionConfigFilepath);
-            zipFileName = currentVersionConfig.ReadLine();
-            zipFileName = zipFileName.Trim();
-
+            using (StreamReader currentVersionConfig = new StreamReader(currentVersionConfigFilepath))
+            {
+                zipFileName = currentVersionConfig.ReadLine();
+                zipFileName = zipFileName.Trim();
+            }
             absoluteZipFilePath = Path.Combine(sitePackagesPath, zipFileName);
 
             return true;

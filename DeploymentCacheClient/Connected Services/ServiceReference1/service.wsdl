@@ -32,8 +32,8 @@
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import namespace="http://tempuri.org/" />
-      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IDeploymentCacheOperations_GetZipFileForSite_InputMessage">
@@ -42,11 +42,17 @@
   <wsdl:message name="IDeploymentCacheOperations_GetZipFileForSite_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetZipFileForSiteResponse" />
   </wsdl:message>
+  <wsdl:message name="IDeploymentCacheOperations_GetZipFileForSite_DeploymentCacheFaultFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" name="detail" element="q1:DeploymentCacheFault" />
+  </wsdl:message>
   <wsdl:message name="IDeploymentCacheOperations_RefreshCacheForSite_InputMessage">
     <wsdl:part name="parameters" element="tns:RefreshCacheForSite" />
   </wsdl:message>
   <wsdl:message name="IDeploymentCacheOperations_RefreshCacheForSite_OutputMessage">
     <wsdl:part name="parameters" element="tns:RefreshCacheForSiteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDeploymentCacheOperations_RefreshCacheForSite_DeploymentCacheFaultFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" name="detail" element="q2:DeploymentCacheFault" />
   </wsdl:message>
   <wsdl:message name="IDeploymentCacheOperations_DeleteCacheForSite_InputMessage">
     <wsdl:part name="parameters" element="tns:DeleteCacheForSite" />
@@ -54,18 +60,52 @@
   <wsdl:message name="IDeploymentCacheOperations_DeleteCacheForSite_OutputMessage">
     <wsdl:part name="parameters" element="tns:DeleteCacheForSiteResponse" />
   </wsdl:message>
+  <wsdl:message name="IDeploymentCacheOperations_DeleteCacheForSite_DeploymentCacheFaultFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" name="detail" element="q3:DeploymentCacheFault" />
+  </wsdl:message>
+  <wsdl:message name="IDeploymentCacheOperations_ClearCache_InputMessage">
+    <wsdl:part name="parameters" element="tns:ClearCache" />
+  </wsdl:message>
+  <wsdl:message name="IDeploymentCacheOperations_ClearCache_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ClearCacheResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDeploymentCacheOperations_ClearCache_DeploymentCacheFaultFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" name="detail" element="q4:DeploymentCacheFault" />
+  </wsdl:message>
+  <wsdl:message name="IDeploymentCacheOperations_GetDeploymentCacheStats_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDeploymentCacheStats" />
+  </wsdl:message>
+  <wsdl:message name="IDeploymentCacheOperations_GetDeploymentCacheStats_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDeploymentCacheStatsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDeploymentCacheOperations_GetDeploymentCacheStats_DeploymentCacheFaultFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" name="detail" element="q5:DeploymentCacheFault" />
+  </wsdl:message>
   <wsdl:portType name="IDeploymentCacheOperations">
     <wsdl:operation name="GetZipFileForSite">
       <wsdl:input wsaw:Action="http://tempuri.org/IDeploymentCacheOperations/GetZipFileForSite" message="tns:IDeploymentCacheOperations_GetZipFileForSite_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IDeploymentCacheOperations/GetZipFileForSiteResponse" message="tns:IDeploymentCacheOperations_GetZipFileForSite_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IDeploymentCacheOperations/GetZipFileForSiteDeploymentCacheFaultFault" name="DeploymentCacheFaultFault" message="tns:IDeploymentCacheOperations_GetZipFileForSite_DeploymentCacheFaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="RefreshCacheForSite">
       <wsdl:input wsaw:Action="http://tempuri.org/IDeploymentCacheOperations/RefreshCacheForSite" message="tns:IDeploymentCacheOperations_RefreshCacheForSite_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IDeploymentCacheOperations/RefreshCacheForSiteResponse" message="tns:IDeploymentCacheOperations_RefreshCacheForSite_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IDeploymentCacheOperations/RefreshCacheForSiteDeploymentCacheFaultFault" name="DeploymentCacheFaultFault" message="tns:IDeploymentCacheOperations_RefreshCacheForSite_DeploymentCacheFaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="DeleteCacheForSite">
       <wsdl:input wsaw:Action="http://tempuri.org/IDeploymentCacheOperations/DeleteCacheForSite" message="tns:IDeploymentCacheOperations_DeleteCacheForSite_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IDeploymentCacheOperations/DeleteCacheForSiteResponse" message="tns:IDeploymentCacheOperations_DeleteCacheForSite_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IDeploymentCacheOperations/DeleteCacheForSiteDeploymentCacheFaultFault" name="DeploymentCacheFaultFault" message="tns:IDeploymentCacheOperations_DeleteCacheForSite_DeploymentCacheFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ClearCache">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDeploymentCacheOperations/ClearCache" message="tns:IDeploymentCacheOperations_ClearCache_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDeploymentCacheOperations/ClearCacheResponse" message="tns:IDeploymentCacheOperations_ClearCache_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IDeploymentCacheOperations/ClearCacheDeploymentCacheFaultFault" name="DeploymentCacheFaultFault" message="tns:IDeploymentCacheOperations_ClearCache_DeploymentCacheFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDeploymentCacheStats">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDeploymentCacheOperations/GetDeploymentCacheStats" message="tns:IDeploymentCacheOperations_GetDeploymentCacheStats_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDeploymentCacheOperations/GetDeploymentCacheStatsResponse" message="tns:IDeploymentCacheOperations_GetDeploymentCacheStats_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IDeploymentCacheOperations/GetDeploymentCacheStatsDeploymentCacheFaultFault" name="DeploymentCacheFaultFault" message="tns:IDeploymentCacheOperations_GetDeploymentCacheStats_DeploymentCacheFaultFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IDeploymentCacheOperations" type="tns:IDeploymentCacheOperations">
@@ -79,6 +119,9 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="DeploymentCacheFaultFault">
+        <soap12:fault use="literal" name="DeploymentCacheFaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="RefreshCacheForSite">
       <soap12:operation soapAction="http://tempuri.org/IDeploymentCacheOperations/RefreshCacheForSite" style="document" />
@@ -88,6 +131,9 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="DeploymentCacheFaultFault">
+        <soap12:fault use="literal" name="DeploymentCacheFaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="DeleteCacheForSite">
       <soap12:operation soapAction="http://tempuri.org/IDeploymentCacheOperations/DeleteCacheForSite" style="document" />
@@ -97,6 +143,33 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="DeploymentCacheFaultFault">
+        <soap12:fault use="literal" name="DeploymentCacheFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ClearCache">
+      <soap12:operation soapAction="http://tempuri.org/IDeploymentCacheOperations/ClearCache" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DeploymentCacheFaultFault">
+        <soap12:fault use="literal" name="DeploymentCacheFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetDeploymentCacheStats">
+      <soap12:operation soapAction="http://tempuri.org/IDeploymentCacheOperations/GetDeploymentCacheStats" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DeploymentCacheFaultFault">
+        <soap12:fault use="literal" name="DeploymentCacheFaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="DeploymentCacheService">

@@ -17,6 +17,15 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="DeploymentCacheResponse" nillable="true" type="tns:DeploymentCacheResponse" />
+  <xs:complexType name="DeploymentCacheFault">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Details" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RootDirectory" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StackTrace" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StorageVolumePath" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DeploymentCacheFault" nillable="true" type="tns:DeploymentCacheFault" />
   <xs:complexType name="DeleteFromCacheResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="IsDeleteSuccessful" type="xs:boolean" />
@@ -24,4 +33,13 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="DeleteFromCacheResponse" nillable="true" type="tns:DeleteFromCacheResponse" />
+  <xs:complexType name="DeploymentCacheStats">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CacheCapacityBytes" type="xs:long" />
+      <xs:element minOccurs="0" name="CacheFreeSpaceBytes" type="xs:long" />
+      <xs:element minOccurs="0" name="CacheUsedSpaceBytes" type="xs:long" />
+      <xs:element minOccurs="0" name="NumberOfSitesInCache" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DeploymentCacheStats" nillable="true" type="tns:DeploymentCacheStats" />
 </xs:schema>
