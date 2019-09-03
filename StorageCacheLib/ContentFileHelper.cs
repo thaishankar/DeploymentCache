@@ -104,6 +104,7 @@ namespace StorageCacheLib
                 zipFileName = currentVersionConfig.ReadLine();
                 zipFileName = zipFileName.Trim();
             }
+
             absoluteZipFilePath = Path.Combine(sitePackagesPath, zipFileName);
 
             return true;
