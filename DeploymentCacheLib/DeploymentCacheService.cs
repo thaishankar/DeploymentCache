@@ -66,7 +66,7 @@ namespace DeploymentCacheLib
             {
                 contentCache.DropSite(cacheRequest.RootDirectory);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 DeploymentCacheFault df = new DeploymentCacheFault("Failed to delete site from Cache.", cacheRequest.RootDirectory, cacheRequest.StorageVolumePath);
                 throw new FaultException<DeploymentCacheFault>(df);
@@ -83,7 +83,7 @@ namespace DeploymentCacheLib
             {
                 contentCache.ClearCache();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 DeploymentCacheFault df = new DeploymentCacheFault("Failed to Clear Cache contents.");
                 throw new FaultException<DeploymentCacheFault>(df);
@@ -102,13 +102,35 @@ namespace DeploymentCacheLib
                 deploymentCacheStats.CacheFreeSpaceBytes = cacheStatsFromStorage.CacheFreeSpaceBytes;
                 deploymentCacheStats.CacheUsedSpaceBytes = cacheStatsFromStorage.CacheUsedSpaceBytes;
             }
-            catch(Exception e)
+            catch(Exception)
             {
                 DeploymentCacheFault df = new DeploymentCacheFault("Failed to get Deployment Cache stats.");
                 throw new FaultException<DeploymentCacheFault>(df);
             }
 
             return deploymentCacheStats;
+        }
+
+        public DeploymentCacheResponse TestDowloadSpeedForZip(DeploymentCacheRequest cacheRequest)
+        {
+            DeploymentCacheResponse cacheResponse = new DeploymentCacheResponse();
+
+            cacheResponse.FileName = cacheRequest.RootDirectory;
+
+            string fileAbsolutePath = Path.Combine(cacheRequest.StorageVolumePath, cacheRequest.RootDirectory); 
+            
+            try
+            {
+                cacheResponse.FileContents = File.ReadAllBytes(fileAbsolutePath);
+                cacheResponse.FileLength = cacheResponse.FileContents.Length;
+            }
+            catch (Exception e)
+            {
+                DeploymentCacheFault df = new DeploymentCacheFault(e.Message);
+                throw new FaultException<DeploymentCacheFault>(df);
+            }
+
+            return cacheResponse;
         }
     }
 }

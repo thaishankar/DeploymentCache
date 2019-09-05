@@ -81,6 +81,15 @@
   <wsdl:message name="IDeploymentCacheOperations_GetDeploymentCacheStats_DeploymentCacheFaultFault_FaultMessage">
     <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" name="detail" element="q5:DeploymentCacheFault" />
   </wsdl:message>
+  <wsdl:message name="IDeploymentCacheOperations_TestDowloadSpeedForZip_InputMessage">
+    <wsdl:part name="parameters" element="tns:TestDowloadSpeedForZip" />
+  </wsdl:message>
+  <wsdl:message name="IDeploymentCacheOperations_TestDowloadSpeedForZip_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TestDowloadSpeedForZipResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDeploymentCacheOperations_TestDowloadSpeedForZip_DeploymentCacheFaultFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" name="detail" element="q6:DeploymentCacheFault" />
+  </wsdl:message>
   <wsdl:portType name="IDeploymentCacheOperations">
     <wsdl:operation name="GetZipFileForSite">
       <wsdl:input wsaw:Action="http://tempuri.org/IDeploymentCacheOperations/GetZipFileForSite" message="tns:IDeploymentCacheOperations_GetZipFileForSite_InputMessage" />
@@ -106,6 +115,11 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IDeploymentCacheOperations/GetDeploymentCacheStats" message="tns:IDeploymentCacheOperations_GetDeploymentCacheStats_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IDeploymentCacheOperations/GetDeploymentCacheStatsResponse" message="tns:IDeploymentCacheOperations_GetDeploymentCacheStats_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/IDeploymentCacheOperations/GetDeploymentCacheStatsDeploymentCacheFaultFault" name="DeploymentCacheFaultFault" message="tns:IDeploymentCacheOperations_GetDeploymentCacheStats_DeploymentCacheFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="TestDowloadSpeedForZip">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDeploymentCacheOperations/TestDowloadSpeedForZip" message="tns:IDeploymentCacheOperations_TestDowloadSpeedForZip_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDeploymentCacheOperations/TestDowloadSpeedForZipResponse" message="tns:IDeploymentCacheOperations_TestDowloadSpeedForZip_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IDeploymentCacheOperations/TestDowloadSpeedForZipDeploymentCacheFaultFault" name="DeploymentCacheFaultFault" message="tns:IDeploymentCacheOperations_TestDowloadSpeedForZip_DeploymentCacheFaultFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IDeploymentCacheOperations" type="tns:IDeploymentCacheOperations">
@@ -161,6 +175,18 @@
     </wsdl:operation>
     <wsdl:operation name="GetDeploymentCacheStats">
       <soap12:operation soapAction="http://tempuri.org/IDeploymentCacheOperations/GetDeploymentCacheStats" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DeploymentCacheFaultFault">
+        <soap12:fault use="literal" name="DeploymentCacheFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="TestDowloadSpeedForZip">
+      <soap12:operation soapAction="http://tempuri.org/IDeploymentCacheOperations/TestDowloadSpeedForZip" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

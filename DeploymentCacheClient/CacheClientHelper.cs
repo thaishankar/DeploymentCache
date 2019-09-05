@@ -18,7 +18,7 @@ namespace CacheClient
     {
         public const int NETTCP_BINDING_PORT = 8002;   // TODO: Read the port from Hosting Config
         public const string DEPLOYMENT_CACHE_ENDPOINT = "DeploymentCache";
-        public const string CLIENT_IP_ADDRESS = "localhost";
+        public const string LOCAL_CLIENT_IP_ADDRESS = "localhost";
         public const int KILOBYTE = 1024;
         public const int MEGABYE = 1024 * KILOBYTE;
     }

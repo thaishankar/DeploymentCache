@@ -473,6 +473,14 @@ namespace DeploymentCacheClient.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDeploymentCacheOperations/GetDeploymentCacheStats", ReplyAction="http://tempuri.org/IDeploymentCacheOperations/GetDeploymentCacheStatsResponse")]
         System.Threading.Tasks.Task<DeploymentCacheClient.ServiceReference1.DeploymentCacheStats> GetDeploymentCacheStatsAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDeploymentCacheOperations/TestDowloadSpeedForZip", ReplyAction="http://tempuri.org/IDeploymentCacheOperations/TestDowloadSpeedForZipResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(DeploymentCacheClient.ServiceReference1.DeploymentCacheFault), Action="http://tempuri.org/IDeploymentCacheOperations/TestDowloadSpeedForZipDeploymentCac" +
+            "heFaultFault", Name="DeploymentCacheFault", Namespace="http://schemas.datacontract.org/2004/07/DeploymentCacheLib")]
+        DeploymentCacheClient.ServiceReference1.DeploymentCacheResponse TestDowloadSpeedForZip(DeploymentCacheClient.ServiceReference1.DeploymentCacheRequest cacheRequest);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDeploymentCacheOperations/TestDowloadSpeedForZip", ReplyAction="http://tempuri.org/IDeploymentCacheOperations/TestDowloadSpeedForZipResponse")]
+        System.Threading.Tasks.Task<DeploymentCacheClient.ServiceReference1.DeploymentCacheResponse> TestDowloadSpeedForZipAsync(DeploymentCacheClient.ServiceReference1.DeploymentCacheRequest cacheRequest);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -540,6 +548,14 @@ namespace DeploymentCacheClient.ServiceReference1 {
         
         public System.Threading.Tasks.Task<DeploymentCacheClient.ServiceReference1.DeploymentCacheStats> GetDeploymentCacheStatsAsync() {
             return base.Channel.GetDeploymentCacheStatsAsync();
+        }
+        
+        public DeploymentCacheClient.ServiceReference1.DeploymentCacheResponse TestDowloadSpeedForZip(DeploymentCacheClient.ServiceReference1.DeploymentCacheRequest cacheRequest) {
+            return base.Channel.TestDowloadSpeedForZip(cacheRequest);
+        }
+        
+        public System.Threading.Tasks.Task<DeploymentCacheClient.ServiceReference1.DeploymentCacheResponse> TestDowloadSpeedForZipAsync(DeploymentCacheClient.ServiceReference1.DeploymentCacheRequest cacheRequest) {
+            return base.Channel.TestDowloadSpeedForZipAsync(cacheRequest);
         }
     }
 }

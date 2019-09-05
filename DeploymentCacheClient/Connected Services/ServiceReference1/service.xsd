@@ -65,4 +65,18 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="TestDowloadSpeedForZip">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" minOccurs="0" name="cacheRequest" nillable="true" type="q8:DeploymentCacheRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TestDowloadSpeedForZipResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" minOccurs="0" name="TestDowloadSpeedForZipResult" nillable="true" type="q9:DeploymentCacheResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

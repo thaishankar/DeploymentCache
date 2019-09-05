@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="RamStorage.cs" />
     <Compile Include="ContentCacheCore.cs" />
     <Compile Include="ContentFileHelper.cs" />
     <Compile Include="FileSystemStorage.cs" />

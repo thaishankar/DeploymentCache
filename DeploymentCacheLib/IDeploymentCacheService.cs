@@ -31,6 +31,10 @@ namespace DeploymentCacheLib
         [FaultContract(typeof(DeploymentCacheFault))]
         DeploymentCacheStats GetDeploymentCacheStats();
 
+        [OperationContract]
+        [FaultContract(typeof(DeploymentCacheFault))]
+        DeploymentCacheResponse TestDowloadSpeedForZip(DeploymentCacheRequest cacheRequest);
+
         // TODO: Add Async Operations for these
     }
 
