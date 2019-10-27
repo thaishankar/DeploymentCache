@@ -8,23 +8,25 @@ using System.Threading;
 
 namespace StorageCacheLib
 {
-    public class ContentCache
+    public class ContentCache : ICacheService
     {
         private FileSystemStorage _diskCacheStorage;
         private LruCache _diskCache;
 
-        public ContentCache(string diskCacheDirectory, int maxDiskCacheCapacityMB)
+        public ContentCache(string diskCacheDirectory, uint maxDiskCacheCapacityMB, uint maxFileSizeToCacheMB = 40)
         {
             // Disk cache settings/construction work
-            _diskCacheStorage = new FileSystemStorage(diskCacheDirectory);
+            _diskCacheStorage = new FileSystemStorage(diskCacheDirectory, maxFileSizeToCacheMB);
             _diskCache = new LruCache(_diskCacheStorage, maxDiskCacheCapacityMB);
 
             ClearCache();
         }
-        
-        public bool Contains(string siteRoot)
+
+        public bool IsSiteCached(string siteName)
         {
-            return _diskCache.Contains(siteRoot);
+            // TODO: Maintain state of all the type of files that we are currently caching for the site - txt, zip
+            // For now, we just check if the site 
+            return _diskCache.Contains(siteName);
         }
 
         public byte[] GetSiteContent(string siteRoot)
@@ -64,6 +66,13 @@ namespace StorageCacheLib
         {
             return _diskCache.GetCacheStats();
         }
+    }
+
+    // Note: This enums are also used to create the Content Directory for the site. For zip, directory would be siteRoot/zip/
+    public enum CachedContentType : uint
+    {
+        Zip = 0,
+        Text = 1
     }
 
     public class CacheStats

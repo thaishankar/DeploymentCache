@@ -9,33 +9,18 @@ namespace StorageCacheLib
 {
     internal class FileMetadata
     {
-        private long _fileSize;
-        private string _fileName;
-        private DateTime _lastUpdated;
+        public long FileSize;
+        public string FileName;
+        public DateTime VersionTimeStamp;
+        public CachedContentType FileType;
 
-        public long FileSize
-        {
-            get { return _fileSize; }
-            set { _fileSize = value; }
-        }
-
-        public string FileName
-        {
-            get { return _fileName; }
-            set { _fileName = value; }
-        }
-
-        public DateTime LastUpdated
-        {
-            get { return _lastUpdated; }
-            //set { _lastUpdated = value; }
-        }
-
-        public FileMetadata(string fileName, long fileSize)
+        public FileMetadata(string fileName, long fileSize, DateTime versionTimeStamp, CachedContentType fileType = CachedContentType.Zip)
         {
             FileName = fileName;
             FileSize = fileSize;
-            _lastUpdated = DateTime.Now;
+            FileType = fileType;
+
+            VersionTimeStamp = versionTimeStamp;
         }
     }
 
@@ -62,7 +47,7 @@ namespace StorageCacheLib
             string sitePath = Path.Combine(storageVolume, siteRoot);
 
             // If Zip file is found
-            if (ContentFileHelper.GetCurrentSiteZipFilepath(sitePath, out absoluteFilePath, out fileName))
+            if (ContentFileHelper.GetRemoteZipFilepath(sitePath, out absoluteFilePath, out fileName))
             {
                 FileInfo siteZipInfo = new FileInfo(absoluteFilePath);
                 return siteZipInfo.Length;
@@ -71,27 +56,27 @@ namespace StorageCacheLib
             return -1;
         }
 
-        public static bool GetCurrentSiteZipFilepath(string sitePath, out string absoluteZipFilePath, out string zipFileName)
+        public static bool GetRemoteZipFilepath(string siteRemotePath, out string absoluteRemoteFilePath, out string remoteFileName)
         {
-            absoluteZipFilePath = "";
-            zipFileName = "";
+            absoluteRemoteFilePath = "";
+            remoteFileName = "";
 
             // Check if site Root Directory exists
-            if(!Directory.Exists(sitePath))
+            if(!Directory.Exists(siteRemotePath))
             {
                 return false;
             }
 
             // Get the current zip filename (need to open the site's siteversion.txt or packagename.txt info files)
-            string sitePackagesPath = Path.Combine(sitePath, "data", "SitePackages");
-            string currentVersionConfigFilepath = Path.Combine(sitePackagesPath, "siteversion.txt");
+            string sitePackagesPath = Path.Combine(siteRemotePath, "data", "SitePackages");
+            string currentZipFilePath = Path.Combine(sitePackagesPath, "siteversion.txt");
 
             // Read siteversion.txt
-            if (!File.Exists(currentVersionConfigFilepath))
+            if (!File.Exists(currentZipFilePath))
             {
                 // Try the other other config file packagename.txt if siteversion.txt doesn't exist
-                currentVersionConfigFilepath = Path.Combine(sitePackagesPath, "packagename.txt");
-                if (!File.Exists(currentVersionConfigFilepath))
+                currentZipFilePath = Path.Combine(sitePackagesPath, "packagename.txt");
+                if (!File.Exists(currentZipFilePath))
                 {
                     // Neither one exists
                     return false;
@@ -99,13 +84,13 @@ namespace StorageCacheLib
             }
 
             // Read the zip file name from siteverion.txt or packagename.txt
-            using (StreamReader currentVersionConfig = new StreamReader(currentVersionConfigFilepath))
+            using (StreamReader currentVersionConfig = new StreamReader(currentZipFilePath))
             {
-                zipFileName = currentVersionConfig.ReadLine();
-                zipFileName = zipFileName.Trim();
+                remoteFileName = currentVersionConfig.ReadLine();
+                remoteFileName = remoteFileName.Trim();
             }
 
-            absoluteZipFilePath = Path.Combine(sitePackagesPath, zipFileName);
+            absoluteRemoteFilePath = Path.Combine(sitePackagesPath, remoteFileName);
 
             return true;
         }

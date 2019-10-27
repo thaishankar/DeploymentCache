@@ -13,15 +13,15 @@ namespace StorageCacheLib
         long GetCacheSizeForSite(string siteRoot);
 
         // Return Site's zip content if SiteRoot exists and contains a Run From Zip file in (RootDirectory\data\SitePacakges)
-        byte[] AddSite(string siteRoot, string storageVolume);
+        byte[] AddSite(string siteRoot, string storageVolume, CachedContentType contentType = CachedContentType.Zip);
 
         // Returns latest zip content for the site if SiteRoot exists and contains a Run From Zip file in (RootDirectory\data\SitePacakges)
-        byte[] UpdateSite(string siteRoot, string storageVolume);
+        byte[] RefreshSiteContents(string siteName, string remoteContentPath, CachedContentType contentType = CachedContentType.Zip);
 
-        byte[] GetSiteContent(string siteRoot, int startingOffset = 0, int lengthBytes = -1);
+        byte[] GetSiteContents(string siteName, string remoteContentPath, CachedContentType contentType = CachedContentType.Zip);
 
         // Deletes Site from Cache
-        long DeleteSite(string siteRoot);
+        void DeleteSite(string siteRoot);
 
         // Empties Cache directory and resets all state
         void ClearCache();
