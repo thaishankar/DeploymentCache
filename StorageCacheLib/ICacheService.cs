@@ -8,11 +8,11 @@ namespace StorageCacheLib
 {
     public interface ICacheService
     {
-        byte[] GetSiteContent(string siteName, CachedContentType contentType = CachedContentType.Zip);
+        byte[] GetSiteContent(string siteName, string remoteContentPath, CachedContentType contentType = CachedContentType.Zip);
 
-        byte[] RefreshSiteContents(string siteName, CachedContentType contentType = CachedContentType.Zip);
+        byte[] RefreshSiteContents(string siteName, string remoteContentPath, CachedContentType contentType = CachedContentType.Zip);
 
-        byte[] AddSiteToCache(string siteName, string storageVolume, string rootDirectory, CachedContentType contentType = CachedContentType.Zip);
+        byte[] AddSiteToCache(string siteName, string remoteContenPath, CachedContentType contentType = CachedContentType.Zip);
 
         void RemoveSiteFromCache(string siteName);
 
@@ -20,6 +20,6 @@ namespace StorageCacheLib
 
         void ClearCache();
 
-        CacheStats GetCacheStats();
+        //CacheStats GetCacheStats();
     }
 }

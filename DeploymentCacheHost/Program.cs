@@ -26,8 +26,8 @@ namespace DeploymentCacheHost
                 netTcpBinding.Security.Mode = SecurityMode.None;
 
                 // Step 3: Add a service endpoint.
-                selfHost.AddServiceEndpoint(typeof(IDeploymentCacheOperations), netTcpBinding, "net.tcp://10.218.0.11:8002/DeploymentCache/");
-                
+                selfHost.AddServiceEndpoint(typeof(IDeploymentCacheOperations), netTcpBinding, "net.tcp://127.0.0.1:8002/DeploymentCache/");
+
                 // Step 4: Enable metadata exchange.
                 ServiceMetadataBehavior smb = new ServiceMetadataBehavior();
                 smb.HttpGetEnabled = true;

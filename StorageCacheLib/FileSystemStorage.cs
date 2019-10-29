@@ -49,6 +49,7 @@ namespace StorageCacheLib
             _cacheDir = cacheDir;
             _maxFileSizeToCacheMB = maxFileSizeToCacheMB;
             _maxCapacityBytes = maxCapacityMB * 1024 * 1024;
+            _stopRequested = false;
 
             // State initialization
             _cachedSites = new Dictionary<string, List<FileMetadata>>();
@@ -125,9 +126,6 @@ namespace StorageCacheLib
             // Create the site subfolder in the cache
             string localSiteDirectory = GetLocalDirectoryPath(siteName, contentType);
 
-            // Only creates if Directory does not already exist. Otherwise its a no-op
-            Directory.CreateDirectory(localSiteDirectory);
-
             // Need to fetch the content from the origin
             string remoteFilePath;
             string remoteFileName;
@@ -144,17 +142,6 @@ namespace StorageCacheLib
 
             if (!String.IsNullOrEmpty(remoteFilePath) && !String.IsNullOrEmpty(remoteFileName))
             {
-                // Copy the remote file to local cache directory with the same name
-                string localFilePath = Path.Combine(localSiteDirectory, remoteFileName);
-
-                // Copy file from storage Volume to local Cache directory
-                // TODO: Should exception be handled here if the file doesn't exist
-                // TODO: Should we do more checks here to avoid overwriting if the file is unchanged?
-                File.Copy(remoteFilePath, localFilePath, true);
-
-                FileInfo localCopyInfo = new FileInfo(remoteFilePath);
-                _occupancyBytes += localCopyInfo.Length;
-
                 // Lock the current occupancies for the site
                 lock (_cachedSites)
                 {
@@ -163,17 +150,47 @@ namespace StorageCacheLib
                     {
                         _cachedSites.Add(siteName, new List<FileMetadata>());
                     }
+                }
+
+                // Copy the remote file to local cache directory with the same name
+                string localFilePath = Path.Combine(localSiteDirectory, remoteFileName);
+                byte[] fileContents = null;
+
+                lock (_cachedSites[siteName])
+                {
+
+                    // Only creates if Directory does not already exist. Otherwise its a no-op
+                    Directory.CreateDirectory(localSiteDirectory);
+
+                    // Copy file from storage Volume to local Cache directory
+                    // TODO: Should exception be handled here if the file doesn't exist
+                    // TODO: Should we do more checks here to avoid overwriting if the file is unchanged?
+                    File.Copy(remoteFilePath, localFilePath, true);
+
+                    FileInfo localCopyInfo = new FileInfo(remoteFilePath);
+                    _occupancyBytes += localCopyInfo.Length;
+
+                    // Not caching 2 files with the same name
+                    foreach (var fileMetadata in _cachedSites[siteName].Where(fileMetadata => fileMetadata.FileName == remoteFileName).ToList())
+                    {
+                        _occupancyBytes -= fileMetadata.FileSize;
+                    }
+
+                    _cachedSites[siteName].RemoveAll(fileMetadata => fileMetadata.FileName == remoteFileName);
 
                     _cachedSites[siteName].Add(new FileMetadata(remoteFileName, localCopyInfo.Length, DateTime.Now, contentType));
 
-                    if (File.Exists(CACHED_FILE_LIST_NAME))
+                    string cachedListForSiteJson = Path.Combine(GetSiteLocalDirectory(siteName), CACHED_FILE_LIST_NAME);
+                    if (File.Exists(cachedListForSiteJson))
                     {
-                        File.Delete(CACHED_FILE_LIST_NAME);
+                        File.Delete(cachedListForSiteJson);
                     }
 
                     string cachedFilesForSiteJson = JsonConvert.SerializeObject(_cachedSites[siteName]);
                     string cachedFilesListFile = Path.Combine(GetSiteLocalDirectory(siteName), CACHED_FILE_LIST_NAME);
                     File.WriteAllText(cachedFilesListFile, cachedFilesForSiteJson);
+
+                    fileContents = File.ReadAllBytes(localFilePath);
                 }
 
                 lock(_recentlyAccessedSites)
@@ -186,7 +203,7 @@ namespace StorageCacheLib
                     _recentlyAccessedSites.AddFirst(siteName);
                 }
 
-                return File.ReadAllBytes(localFilePath);
+                return fileContents;
             }
 
             return null;
@@ -206,55 +223,68 @@ namespace StorageCacheLib
         {
             string remoteFileName = Path.GetFileName(remoteContentPath);
 
-            // Requesting content for site which is not currently cached. Do Add Site First
-            if (!IsFileCachedForSite(siteName, remoteFileName))
+            lock (_cachedSites[siteName])
             {
-                return AddSite(siteName, remoteContentPath, contentType);
-            }
+                // Requesting content for site which is not currently cached. Do Add Site First
+                if (!IsFileCachedForSite(siteName, remoteFileName))
+                {
+                    return AddSite(siteName, remoteContentPath, contentType);
+                }
 
-            // Get the filepath for the site's zip
-            string localContentDirectory = GetLocalDirectoryPath(siteName, contentType);
-            string localFilePath = Path.Combine(localContentDirectory, remoteFileName);
+                // Get the filepath for the site's zip
+                string localContentDirectory = GetLocalDirectoryPath(siteName, contentType);
+                string localFilePath = Path.Combine(localContentDirectory, remoteFileName);
 
-            byte[] fileContents = null;
+                byte[] fileContents = null;
 
-            // We do not take any locks in this code path to have faster read times from cache.
-            // If in case they site or file have been deleted before we read the contents, we catch the exception and do AddSite instead
-            try
-            {
-                fileContents = File.ReadAllBytes(localFilePath);
-            }
-            catch(FileNotFoundException)
-            {
-                fileContents = AddSite(siteName, remoteContentPath, contentType);
-            }
-            catch(DirectoryNotFoundException)
-            {
-                fileContents = AddSite(siteName, remoteContentPath, contentType);
-            }
+                // We do not take any locks in this code path to have faster read times from cache.
+                // If in case they site or file have been deleted before we read the contents, we catch the exception and do AddSite instead
+                try
+                {
+                    fileContents = File.ReadAllBytes(localFilePath);
+                }
+                catch (FileNotFoundException)
+                {
+                    fileContents = AddSite(siteName, remoteContentPath, contentType);
+                }
+                catch (DirectoryNotFoundException)
+                {
+                    fileContents = AddSite(siteName, remoteContentPath, contentType);
+                }
 
-            return fileContents;
+                return fileContents;
+            }
         }
 
         public void DeleteSite(string siteName)
         {
             Console.WriteLine("Deleting Site contents for : {0} CurrentOccupancy Before Deletion: {1}", siteName, _occupancyBytes);
 
-            // Remove the site from _cachedSites
+            // If Site is in cache 
+            long cacheSizeForSite;
             lock (_cachedSites)
             {
-                // Delete all contents of the evicteeSite from Cache
-                // TODO: Do we need a try catch here?
-                Directory.Delete(GetSiteLocalDirectory(siteName), true);
+                cacheSizeForSite = GetCacheSizeForSite(siteName);
 
-                long cacheSizeForSite = GetCacheSizeForSite(siteName);
-
-                // If Site is in cache 
-                if (_cachedSites.ContainsKey(siteName) && cacheSizeForSite == -1)
+                if (cacheSizeForSite != -1)
                 {
-                    _occupancyBytes -= cacheSizeForSite;
 
-                    _cachedSites.Remove(siteName);
+                    // Delete all contents of the evicteeSite from Cache
+                    // TODO: Do we need a try catch here
+
+                    lock (_cachedSites[siteName])
+                    {
+                        string siteRootPathInCache = GetSiteLocalDirectory(siteName);
+
+                        if (Directory.Exists(siteRootPathInCache))
+                        {
+                            Directory.Delete(GetSiteLocalDirectory(siteName), true);
+                        }
+
+                        _occupancyBytes -= cacheSizeForSite;
+
+                        _cachedSites.Remove(siteName);
+                    }
                 }
             }
 
@@ -267,21 +297,24 @@ namespace StorageCacheLib
                 }
             }
 
-            Console.WriteLine("Deleting Site contents for : {0} CurrentOccupancy After Deletion: {1}", siteName, _occupancyBytes);
+            Console.WriteLine("Deleting Site contents for : {0} CurrentOccupancy After Deletion: {1} CacheSizeForSite = {2}", siteName, _occupancyBytes, cacheSizeForSite);
         }
 
         public void ClearCache()
         {
-            if (Directory.Exists(_cacheDir))
+            lock (_cachedSites)
             {
-                try
+                if (Directory.Exists(_cacheDir))
                 {
-                    Directory.Delete(_cacheDir, true);
-                }
-                catch(IOException)
-                {
-                    // Not doing anything if there is a exception deleting directory. 
-                    // If for some reason delete fails, subsequent CreateDirectory will retain the directory.
+                    try
+                    {
+                        Directory.Delete(_cacheDir, true);
+                    }
+                    catch (IOException)
+                    {
+                        // Not doing anything if there is a exception deleting directory. 
+                        // If for some reason delete fails, subsequent CreateDirectory will retain the directory.
+                    }
                 }
             }
 

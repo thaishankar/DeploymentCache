@@ -12,11 +12,11 @@ namespace DeploymentCacheLib
     // Keep one ServiceContext so as to maintain cache states.
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, 
                       ConcurrencyMode = ConcurrencyMode.Multiple,
-                      IncludeExceptionDetailInFaults = false,
+                      IncludeExceptionDetailInFaults = true,
                       UseSynchronizationContext = true)]
     public class DeploymentCacheService : IDeploymentCacheOperations
     {
-        private ContentCache contentCache = new ContentCache(@"C:\Cache", 300);
+        private ContentCache contentCache = new ContentCache(@"D:\Cache", 300);
 
         public DeploymentCacheResponse GetZipFileForSite(DeploymentCacheRequest cacheRequest)
         {
@@ -24,7 +24,7 @@ namespace DeploymentCacheLib
 
             cacheResponse.SiteName = cacheRequest.SiteName;
 
-            cacheResponse.FileContents = contentCache.AddSite(cacheRequest.RootDirectory, cacheRequest.StorageVolumePath);
+            cacheResponse.FileContents = contentCache.AddSiteToCache(cacheRequest.SiteName, Path.Combine(cacheRequest.StorageVolumePath, cacheRequest.RootDirectory));
 
             if (cacheResponse.FileContents == null)
             {
@@ -44,7 +44,7 @@ namespace DeploymentCacheLib
 
             cacheRefreshResponse.SiteName = cacheRequest.SiteName;
 
-            cacheRefreshResponse.FileContents = contentCache.UpdateSite(cacheRequest.RootDirectory, cacheRequest.StorageVolumePath);
+            cacheRefreshResponse.FileContents = contentCache.RefreshSiteContents(cacheRequest.SiteName, Path.Combine(cacheRequest.StorageVolumePath, cacheRequest.RootDirectory));
 
             if (cacheRefreshResponse.FileContents == null)
             {
@@ -64,7 +64,7 @@ namespace DeploymentCacheLib
 
             try
             {
-                contentCache.DropSite(cacheRequest.RootDirectory);
+                contentCache.RemoveSiteFromCache(cacheRequest.SiteName);
             }
             catch (Exception)
             {
@@ -95,12 +95,12 @@ namespace DeploymentCacheLib
             DeploymentCacheStats deploymentCacheStats = new DeploymentCacheStats();
             try
             {
-                CacheStats cacheStatsFromStorage = contentCache.GetCacheStats();
+                //CacheStats cacheStatsFromStorage = contentCache.GetCacheStats();
 
-                deploymentCacheStats.NumberOfSitesInCache = cacheStatsFromStorage.NumberOfSitesInCache;
-                deploymentCacheStats.CacheCapacityBytes = cacheStatsFromStorage.CacheCapacityBytes;
-                deploymentCacheStats.CacheFreeSpaceBytes = cacheStatsFromStorage.CacheFreeSpaceBytes;
-                deploymentCacheStats.CacheUsedSpaceBytes = cacheStatsFromStorage.CacheUsedSpaceBytes;
+                deploymentCacheStats.NumberOfSitesInCache = 0;
+                deploymentCacheStats.CacheCapacityBytes = 0;
+                deploymentCacheStats.CacheFreeSpaceBytes = 0;
+                deploymentCacheStats.CacheUsedSpaceBytes = 0;
             }
             catch(Exception)
             {

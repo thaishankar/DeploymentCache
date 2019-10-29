@@ -11,61 +11,64 @@ namespace StorageCacheLib
     public class ContentCache : ICacheService
     {
         private FileSystemStorage _diskCacheStorage;
-        private LruCache _diskCache;
+        //private LruCache _diskCache;
 
-        public ContentCache(string diskCacheDirectory, uint maxDiskCacheCapacityMB, uint maxFileSizeToCacheMB = 40)
+        public ContentCache(string diskCacheDirectory, uint maxCapacityMB, uint maxFileSizeToCacheMB = 40)
         {
             // Disk cache settings/construction work
-            _diskCacheStorage = new FileSystemStorage(diskCacheDirectory, maxFileSizeToCacheMB);
-            _diskCache = new LruCache(_diskCacheStorage, maxDiskCacheCapacityMB);
-
-            ClearCache();
+            _diskCacheStorage = new FileSystemStorage(diskCacheDirectory, maxFileSizeToCacheMB, maxCapacityMB);
+            //_diskCache = new LruCache(_diskCacheStorage, maxDiskCacheCapacityMB);
         }
 
-        public bool IsSiteCached(string siteName)
+        //public bool IsSiteCached(string siteName)
+        //{
+        //    // TODO: Maintain state of all the type of files that we are currently caching for the site - txt, zip
+        //    // For now, we just check if the site 
+        //    return _diskCache.Contains(siteName);
+        //}
+
+        public byte[] GetSiteContent(string siteName, string remoteContentPath, CachedContentType contentType = CachedContentType.Zip)
         {
-            // TODO: Maintain state of all the type of files that we are currently caching for the site - txt, zip
-            // For now, we just check if the site 
-            return _diskCache.Contains(siteName);
+            return _diskCacheStorage.GetSiteContents(siteName, remoteContentPath, contentType);
         }
 
-        public byte[] GetSiteContent(string siteRoot)
+        public byte[] RefreshSiteContents(string siteName, string remoteContentPath, CachedContentType contentType = CachedContentType.Zip)
         {
-           return _diskCache.GetSiteContent(siteRoot);
+            return _diskCacheStorage.RefreshSiteContents(siteName, remoteContentPath, contentType); ;
         }
 
-        public byte[] UpdateSite(string siteRoot, string storageVolume)
+        public byte[] AddSiteToCache(string siteName, string remoteContentPath, CachedContentType contentType = CachedContentType.Zip)
         {
-            return _diskCache.UpdateSite(siteRoot, storageVolume);
+            return _diskCacheStorage.AddSite(siteName, remoteContentPath, contentType);
         }
 
-        public byte[] AddSite(string siteRoot, string storageVolume, bool addToRamCache = false)
+        public void RemoveSiteFromCache(string siteName)
         {
-            return _diskCache.AddSite(siteRoot, storageVolume);
+            _diskCacheStorage.DeleteSite(siteName);
         }
 
-        public void DropSite(string siteRoot)
+        public void DropSites(string[] sitesToBeDeleted)
         {
-            _diskCache.DeleteSite(siteRoot);
-        }
-
-        public void DropSites(string[] siteRootsList)
-        {
-            foreach (string siteRoot in siteRootsList)
+            foreach (string siteName in sitesToBeDeleted)
             {
-                DropSite(siteRoot);
+                _diskCacheStorage.DeleteSite(siteName);
             }
+        }
+
+        public void RemoveSitesFromCache(List<string> sites)
+        {
+            _diskCacheStorage.ClearCache();
         }
 
         public void ClearCache()
         {
-            _diskCache.Clear();
+            _diskCacheStorage.ClearCache();
         }
 
-        public CacheStats GetCacheStats()
-        {
-            return _diskCache.GetCacheStats();
-        }
+        //public CacheStats GetCacheStats()
+        //{
+        //    return _diskCache.GetCacheStats();
+        //}
     }
 
     // Note: This enums are also used to create the Content Directory for the site. For zip, directory would be siteRoot/zip/

@@ -62,7 +62,7 @@ namespace CacheClient
             netTcpBinding.ReaderQuotas.MaxBytesPerRead = 200 * Constants.MEGABYE;
             netTcpBinding.ReaderQuotas.MaxStringContentLength = 2 * Constants.MEGABYE;
 
-            //netTcpBinding.CloseTimeout  // Default is 1 min.
+            netTcpBinding.CloseTimeout = TimeSpan.FromMinutes(15); 
             netTcpBinding.MaxConnections = 20;
             netTcpBinding.ListenBacklog = 20; // Max pending connections per endpoint before they are dropped
             //netTcpBinding.ReliableSession.Enabled = true;
