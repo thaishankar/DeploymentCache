@@ -434,13 +434,29 @@ namespace DeploymentCacheClient.ServiceReference1 {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference1.IDeploymentCacheOperations")]
     public interface IDeploymentCacheOperations {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDeploymentCacheOperations/GetZipFileForSite", ReplyAction="http://tempuri.org/IDeploymentCacheOperations/GetZipFileForSiteResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(DeploymentCacheClient.ServiceReference1.DeploymentCacheFault), Action="http://tempuri.org/IDeploymentCacheOperations/GetZipFileForSiteDeploymentCacheFau" +
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDeploymentCacheOperations/AddZipFileForSite", ReplyAction="http://tempuri.org/IDeploymentCacheOperations/AddZipFileForSiteResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(DeploymentCacheClient.ServiceReference1.DeploymentCacheFault), Action="http://tempuri.org/IDeploymentCacheOperations/AddZipFileForSiteDeploymentCacheFau" +
             "ltFault", Name="DeploymentCacheFault", Namespace="http://schemas.datacontract.org/2004/07/DeploymentCacheLib")]
-        DeploymentCacheClient.ServiceReference1.DeploymentCacheResponse GetZipFileForSite(DeploymentCacheClient.ServiceReference1.DeploymentCacheRequest cacheRequest);
+        DeploymentCacheClient.ServiceReference1.DeploymentCacheResponse AddZipFileForSite(DeploymentCacheClient.ServiceReference1.DeploymentCacheRequest cacheRequest);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDeploymentCacheOperations/GetZipFileForSite", ReplyAction="http://tempuri.org/IDeploymentCacheOperations/GetZipFileForSiteResponse")]
-        System.Threading.Tasks.Task<DeploymentCacheClient.ServiceReference1.DeploymentCacheResponse> GetZipFileForSiteAsync(DeploymentCacheClient.ServiceReference1.DeploymentCacheRequest cacheRequest);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDeploymentCacheOperations/AddZipFileForSite", ReplyAction="http://tempuri.org/IDeploymentCacheOperations/AddZipFileForSiteResponse")]
+        System.Threading.Tasks.Task<DeploymentCacheClient.ServiceReference1.DeploymentCacheResponse> AddZipFileForSiteAsync(DeploymentCacheClient.ServiceReference1.DeploymentCacheRequest cacheRequest);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDeploymentCacheOperations/AddZipFileForSiteWithUrl", ReplyAction="http://tempuri.org/IDeploymentCacheOperations/AddZipFileForSiteWithUrlResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(DeploymentCacheClient.ServiceReference1.DeploymentCacheFault), Action="http://tempuri.org/IDeploymentCacheOperations/AddZipFileForSiteWithUrlDeploymentC" +
+            "acheFaultFault", Name="DeploymentCacheFault", Namespace="http://schemas.datacontract.org/2004/07/DeploymentCacheLib")]
+        DeploymentCacheClient.ServiceReference1.DeploymentCacheResponse AddZipFileForSiteWithUrl(DeploymentCacheClient.ServiceReference1.DeploymentCacheRequest cacheRequest);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDeploymentCacheOperations/AddZipFileForSiteWithUrl", ReplyAction="http://tempuri.org/IDeploymentCacheOperations/AddZipFileForSiteWithUrlResponse")]
+        System.Threading.Tasks.Task<DeploymentCacheClient.ServiceReference1.DeploymentCacheResponse> AddZipFileForSiteWithUrlAsync(DeploymentCacheClient.ServiceReference1.DeploymentCacheRequest cacheRequest);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDeploymentCacheOperations/GetSiteContents", ReplyAction="http://tempuri.org/IDeploymentCacheOperations/GetSiteContentsResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(DeploymentCacheClient.ServiceReference1.DeploymentCacheFault), Action="http://tempuri.org/IDeploymentCacheOperations/GetSiteContentsDeploymentCacheFault" +
+            "Fault", Name="DeploymentCacheFault", Namespace="http://schemas.datacontract.org/2004/07/DeploymentCacheLib")]
+        DeploymentCacheClient.ServiceReference1.DeploymentCacheResponse GetSiteContents(DeploymentCacheClient.ServiceReference1.DeploymentCacheRequest cacheRequest);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDeploymentCacheOperations/GetSiteContents", ReplyAction="http://tempuri.org/IDeploymentCacheOperations/GetSiteContentsResponse")]
+        System.Threading.Tasks.Task<DeploymentCacheClient.ServiceReference1.DeploymentCacheResponse> GetSiteContentsAsync(DeploymentCacheClient.ServiceReference1.DeploymentCacheRequest cacheRequest);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDeploymentCacheOperations/RefreshCacheForSite", ReplyAction="http://tempuri.org/IDeploymentCacheOperations/RefreshCacheForSiteResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(DeploymentCacheClient.ServiceReference1.DeploymentCacheFault), Action="http://tempuri.org/IDeploymentCacheOperations/RefreshCacheForSiteDeploymentCacheF" +
@@ -510,12 +526,28 @@ namespace DeploymentCacheClient.ServiceReference1 {
                 base(binding, remoteAddress) {
         }
         
-        public DeploymentCacheClient.ServiceReference1.DeploymentCacheResponse GetZipFileForSite(DeploymentCacheClient.ServiceReference1.DeploymentCacheRequest cacheRequest) {
-            return base.Channel.GetZipFileForSite(cacheRequest);
+        public DeploymentCacheClient.ServiceReference1.DeploymentCacheResponse AddZipFileForSite(DeploymentCacheClient.ServiceReference1.DeploymentCacheRequest cacheRequest) {
+            return base.Channel.AddZipFileForSite(cacheRequest);
         }
         
-        public System.Threading.Tasks.Task<DeploymentCacheClient.ServiceReference1.DeploymentCacheResponse> GetZipFileForSiteAsync(DeploymentCacheClient.ServiceReference1.DeploymentCacheRequest cacheRequest) {
-            return base.Channel.GetZipFileForSiteAsync(cacheRequest);
+        public System.Threading.Tasks.Task<DeploymentCacheClient.ServiceReference1.DeploymentCacheResponse> AddZipFileForSiteAsync(DeploymentCacheClient.ServiceReference1.DeploymentCacheRequest cacheRequest) {
+            return base.Channel.AddZipFileForSiteAsync(cacheRequest);
+        }
+        
+        public DeploymentCacheClient.ServiceReference1.DeploymentCacheResponse AddZipFileForSiteWithUrl(DeploymentCacheClient.ServiceReference1.DeploymentCacheRequest cacheRequest) {
+            return base.Channel.AddZipFileForSiteWithUrl(cacheRequest);
+        }
+        
+        public System.Threading.Tasks.Task<DeploymentCacheClient.ServiceReference1.DeploymentCacheResponse> AddZipFileForSiteWithUrlAsync(DeploymentCacheClient.ServiceReference1.DeploymentCacheRequest cacheRequest) {
+            return base.Channel.AddZipFileForSiteWithUrlAsync(cacheRequest);
+        }
+        
+        public DeploymentCacheClient.ServiceReference1.DeploymentCacheResponse GetSiteContents(DeploymentCacheClient.ServiceReference1.DeploymentCacheRequest cacheRequest) {
+            return base.Channel.GetSiteContents(cacheRequest);
+        }
+        
+        public System.Threading.Tasks.Task<DeploymentCacheClient.ServiceReference1.DeploymentCacheResponse> GetSiteContentsAsync(DeploymentCacheClient.ServiceReference1.DeploymentCacheRequest cacheRequest) {
+            return base.Channel.GetSiteContentsAsync(cacheRequest);
         }
         
         public DeploymentCacheClient.ServiceReference1.DeploymentCacheResponse RefreshCacheForSite(DeploymentCacheClient.ServiceReference1.DeploymentCacheRequest cacheRequest) {

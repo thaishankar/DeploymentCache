@@ -10,10 +10,10 @@ namespace StorageCacheLib
     {
         long OccupancyInBytes { get; }
 
-        long GetCacheSizeForSite(string siteRoot);
-
         // Return Site's zip content if SiteRoot exists and contains a Run From Zip file in (RootDirectory\data\SitePacakges)
         byte[] AddSite(string siteRoot, string storageVolume, CachedContentType contentType = CachedContentType.Zip);
+
+        byte[] AddSiteWithUrl(string siteName, string urlToDownloadFrom, CachedContentType contentType = CachedContentType.Zip);
 
         // Returns latest zip content for the site if SiteRoot exists and contains a Run From Zip file in (RootDirectory\data\SitePacakges)
         byte[] RefreshSiteContents(string siteName, string remoteContentPath, CachedContentType contentType = CachedContentType.Zip);

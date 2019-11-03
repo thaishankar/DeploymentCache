@@ -1,45 +1,73 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import namespace="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" />
-  <xs:element name="GetZipFileForSite">
+  <xs:element name="AddZipFileForSite">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" minOccurs="0" name="cacheRequest" nillable="true" type="q1:DeploymentCacheRequest" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetZipFileForSiteResponse">
+  <xs:element name="AddZipFileForSiteResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" minOccurs="0" name="GetZipFileForSiteResult" nillable="true" type="q2:DeploymentCacheResponse" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" minOccurs="0" name="AddZipFileForSiteResult" nillable="true" type="q2:DeploymentCacheResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="RefreshCacheForSite">
+  <xs:element name="AddZipFileForSiteWithUrl">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" minOccurs="0" name="cacheRequest" nillable="true" type="q3:DeploymentCacheRequest" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="RefreshCacheForSiteResponse">
+  <xs:element name="AddZipFileForSiteWithUrlResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" minOccurs="0" name="RefreshCacheForSiteResult" nillable="true" type="q4:DeploymentCacheResponse" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" minOccurs="0" name="AddZipFileForSiteWithUrlResult" nillable="true" type="q4:DeploymentCacheResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="DeleteCacheForSite">
+  <xs:element name="GetSiteContents">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" minOccurs="0" name="cacheRequest" nillable="true" type="q5:DeploymentCacheRequest" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetSiteContentsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" minOccurs="0" name="GetSiteContentsResult" nillable="true" type="q6:DeploymentCacheResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RefreshCacheForSite">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" minOccurs="0" name="cacheRequest" nillable="true" type="q7:DeploymentCacheRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RefreshCacheForSiteResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" minOccurs="0" name="RefreshCacheForSiteResult" nillable="true" type="q8:DeploymentCacheResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteCacheForSite">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" minOccurs="0" name="cacheRequest" nillable="true" type="q9:DeploymentCacheRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="DeleteCacheForSiteResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" minOccurs="0" name="DeleteCacheForSiteResult" nillable="true" type="q6:DeleteFromCacheResponse" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" minOccurs="0" name="DeleteCacheForSiteResult" nillable="true" type="q10:DeleteFromCacheResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -61,21 +89,21 @@
   <xs:element name="GetDeploymentCacheStatsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" minOccurs="0" name="GetDeploymentCacheStatsResult" nillable="true" type="q7:DeploymentCacheStats" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" minOccurs="0" name="GetDeploymentCacheStatsResult" nillable="true" type="q11:DeploymentCacheStats" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="TestDowloadSpeedForZip">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" minOccurs="0" name="cacheRequest" nillable="true" type="q8:DeploymentCacheRequest" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" minOccurs="0" name="cacheRequest" nillable="true" type="q12:DeploymentCacheRequest" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="TestDowloadSpeedForZipResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" minOccurs="0" name="TestDowloadSpeedForZipResult" nillable="true" type="q9:DeploymentCacheResponse" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" minOccurs="0" name="TestDowloadSpeedForZipResult" nillable="true" type="q13:DeploymentCacheResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

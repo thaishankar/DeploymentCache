@@ -16,20 +16,78 @@ namespace DeploymentCacheLib
                       UseSynchronizationContext = true)]
     public class DeploymentCacheService : IDeploymentCacheOperations
     {
-        private ContentCache contentCache = new ContentCache(@"D:\Cache", 300);
+        private ContentCache contentCache = new ContentCache(@"D:\Cache", 10);
 
-        public DeploymentCacheResponse GetZipFileForSite(DeploymentCacheRequest cacheRequest)
+        public DeploymentCacheResponse AddZipFileForSite(DeploymentCacheRequest cacheRequest)
         {
             DeploymentCacheResponse cacheResponse = new DeploymentCacheResponse();
 
             cacheResponse.SiteName = cacheRequest.SiteName;
 
-            cacheResponse.FileContents = contentCache.AddSiteToCache(cacheRequest.SiteName, Path.Combine(cacheRequest.StorageVolumePath, cacheRequest.RootDirectory));
+            try
+            {
+                cacheResponse.FileContents = contentCache.AddSiteToCache(cacheRequest.SiteName, Path.Combine(cacheRequest.StorageVolumePath, cacheRequest.RootDirectory));
+            }
+            catch (Exception ex)
+            {
+                DeploymentCacheFault df = new DeploymentCacheFault(string.Format("Failed to add site in Cache. Ex: {0}", ex.ToString()),
+                                                        cacheRequest.RootDirectory, cacheRequest.StorageVolumePath);
+                throw new FaultException<DeploymentCacheFault>(df);
+            }
 
             if (cacheResponse.FileContents == null)
             {
                 // Failed to add site to Cache
                 DeploymentCacheFault df = new DeploymentCacheFault("Failed to add site to Cache. Could not get site content", cacheRequest.RootDirectory, cacheRequest.StorageVolumePath);
+                throw new FaultException<DeploymentCacheFault>(df);
+            }
+
+            cacheResponse.FileLength = cacheResponse.FileContents.Length;
+
+            return cacheResponse;
+        }
+
+        public DeploymentCacheResponse AddZipFileForSiteWithUrl(DeploymentCacheRequest cacheRequest)
+        {
+            DeploymentCacheResponse cacheResponse = new DeploymentCacheResponse();
+
+            cacheResponse.SiteName = cacheRequest.SiteName;
+
+            cacheResponse.FileContents = contentCache.AddSiteWithUrlToCache(cacheRequest.SiteName, cacheRequest.RootDirectory);
+
+            if (cacheResponse.FileContents == null)
+            {
+                // Failed to add site to Cache
+                DeploymentCacheFault df = new DeploymentCacheFault("Failed to add site with URl");
+                throw new FaultException<DeploymentCacheFault>(df);
+            }
+
+            cacheResponse.FileLength = cacheResponse.FileContents.Length;
+
+            return cacheResponse;
+        }
+
+        public DeploymentCacheResponse GetSiteContents(DeploymentCacheRequest cacheRequest)
+        {
+            DeploymentCacheResponse cacheResponse = new DeploymentCacheResponse();
+
+            cacheResponse.SiteName = cacheRequest.SiteName;
+
+            try
+            {
+                cacheResponse.FileContents = contentCache.GetSiteContent(cacheRequest.SiteName, Path.Combine(cacheRequest.StorageVolumePath, cacheRequest.RootDirectory));
+            }
+            catch (Exception ex)
+            {
+                DeploymentCacheFault df = new DeploymentCacheFault(string.Format("Failed to GetSiteContents in Cache. Ex: {0}", ex.ToString()),
+                                                        cacheRequest.RootDirectory, cacheRequest.StorageVolumePath);
+                throw new FaultException<DeploymentCacheFault>(df);
+            }
+
+            if (cacheResponse.FileContents == null)
+            {
+                // Failed to add site to Cache
+                DeploymentCacheFault df = new DeploymentCacheFault("Failed to get site content", cacheRequest.RootDirectory, cacheRequest.StorageVolumePath);
                 throw new FaultException<DeploymentCacheFault>(df);
             }
 
@@ -44,7 +102,16 @@ namespace DeploymentCacheLib
 
             cacheRefreshResponse.SiteName = cacheRequest.SiteName;
 
-            cacheRefreshResponse.FileContents = contentCache.RefreshSiteContents(cacheRequest.SiteName, Path.Combine(cacheRequest.StorageVolumePath, cacheRequest.RootDirectory));
+            try
+            {
+                cacheRefreshResponse.FileContents = contentCache.RefreshSiteContents(cacheRequest.SiteName, Path.Combine(cacheRequest.StorageVolumePath, cacheRequest.RootDirectory));
+            }
+            catch(Exception ex)
+            {
+                DeploymentCacheFault df = new DeploymentCacheFault(string.Format("Failed to Refersh site in Cache. Ex: {0}", ex.ToString()),
+                                                        cacheRequest.RootDirectory, cacheRequest.StorageVolumePath);
+                throw new FaultException<DeploymentCacheFault>(df);
+            }
 
             if (cacheRefreshResponse.FileContents == null)
             {
@@ -66,9 +133,11 @@ namespace DeploymentCacheLib
             {
                 contentCache.RemoveSiteFromCache(cacheRequest.SiteName);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                DeploymentCacheFault df = new DeploymentCacheFault("Failed to delete site from Cache.", cacheRequest.RootDirectory, cacheRequest.StorageVolumePath);
+                DeploymentCacheFault df = new DeploymentCacheFault(string.Format("Failed to delete site from Cache. Exception: {0}", e.ToString()),
+                                                                    cacheRequest.RootDirectory, 
+                                                                    cacheRequest.StorageVolumePath);
                 throw new FaultException<DeploymentCacheFault>(df);
             }
 

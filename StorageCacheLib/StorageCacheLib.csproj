@@ -44,12 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CacheStateForSite.cs" />
     <Compile Include="ContentCacheCore.cs" />
     <Compile Include="ContentFileHelper.cs" />
     <Compile Include="FileSystemStorage.cs" />
     <Compile Include="ISiteCacheStorage.cs" />
     <Compile Include="ICacheService.cs" />
-    <Compile Include="LruCache.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

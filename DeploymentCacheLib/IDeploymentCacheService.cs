@@ -13,7 +13,15 @@ namespace DeploymentCacheLib
     {
         [OperationContract]
         [FaultContract(typeof(DeploymentCacheFault))]
-        DeploymentCacheResponse GetZipFileForSite(DeploymentCacheRequest cacheRequest);
+        DeploymentCacheResponse AddZipFileForSite(DeploymentCacheRequest cacheRequest);
+
+        [OperationContract]
+        [FaultContract(typeof(DeploymentCacheFault))]
+        DeploymentCacheResponse AddZipFileForSiteWithUrl(DeploymentCacheRequest cacheRequest);
+
+        [OperationContract]
+        [FaultContract(typeof(DeploymentCacheFault))]
+        DeploymentCacheResponse GetSiteContents(DeploymentCacheRequest cacheRequest);
 
         [OperationContract]
         [FaultContract(typeof(DeploymentCacheFault))]

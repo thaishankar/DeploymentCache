@@ -59,23 +59,41 @@ namespace CacheClient
 
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
+            Random random = new Random();
 
-            int count = 5;
             try
             {
+                //cacheRequest.SiteName = "testSiteWithDownload";
+                //cacheRequest.RootDirectory = @"https://thshanmu4.blob.core.windows.net/testzip/File1mb_9.zip";
+                //DeploymentCacheResponse cacheResponse = cacheOperationsClient.AddZipFileForSiteWithUrl(cacheRequest);
+                //Console.WriteLine("Response: Site: {0} Size: {1}", cacheRequest.SiteName, cacheResponse.FileContents.Length);
+
                 while (true)
                 {
-                    DeploymentCacheResponse cacheResponse = cacheOperationsClient.GetZipFileForSite(cacheRequest);
+                    int siteID = random.Next(5);
+                    cacheRequest.SiteName = string.Format("testSite{0}", siteID);
+                    DeploymentCacheResponse cacheResponse = cacheOperationsClient.AddZipFileForSite(cacheRequest);
 
-                    Console.WriteLine("Response: File: {0} Size: {1}", cacheResponse.FileName, cacheResponse.FileContents.Length);
+                    Console.WriteLine("Response: Site: {0} Size: {1}", cacheRequest.SiteName, cacheResponse.FileContents.Length);
 
-                    cacheResponse = cacheOperationsClient.GetZipFileForSite(cacheRequest);
+                    Thread.Sleep(2000);
 
-                    Console.WriteLine("Response: File: {0} Size: {1}", cacheResponse.FileName, cacheResponse.FileContents.Length);
+                    siteID = random.Next(5);
+                    cacheRequest.SiteName = string.Format("testSite{0}", siteID);
+                     cacheResponse = cacheOperationsClient.GetSiteContents(cacheRequest);
+
+                    Console.WriteLine("Response: Site: {0} Size: {1}", cacheRequest.SiteName, cacheResponse.FileContents.Length);
+
+                    Thread.Sleep(2000);
+
+                    siteID = random.Next(5);
+                    cacheRequest.SiteName = string.Format("testSite{0}", siteID);
 
                     cacheResponse = cacheOperationsClient.RefreshCacheForSite(cacheRequest);
 
-                    Console.WriteLine("Refresh Cache File: {0} Size: {1}", cacheResponse.FileName, cacheResponse.FileContents.Length);
+                    Console.WriteLine("Refresh Cache Site: {0} Size: {1}", cacheRequest.SiteName, cacheResponse.FileContents.Length);
+
+                    Thread.Sleep(2000);
 
                     DeploymentCacheStats deploymentCacheStats = cacheOperationsClient.GetDeploymentCacheStats();
 
@@ -85,9 +103,9 @@ namespace CacheClient
                                             deploymentCacheStats.CacheFreeSpaceBytes,
                                             deploymentCacheStats.CacheCapacityBytes);
 
-                    DeploymentCacheRequest deleteFromCacheRequest = new DeploymentCacheRequest();
-                    deleteFromCacheRequest.RootDirectory = "home";
-                    cacheOperationsClient.DeleteCacheForSite(cacheRequest);
+                    //DeploymentCacheRequest deleteFromCacheRequest = new DeploymentCacheRequest();
+                    //deleteFromCacheRequest.RootDirectory = "home";
+                    //cacheOperationsClient.DeleteCacheForSite(cacheRequest);
                 }
             }
             catch (FaultException<DeploymentCacheFault> dcf)

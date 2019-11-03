@@ -36,14 +36,32 @@
       <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
     </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="IDeploymentCacheOperations_GetZipFileForSite_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetZipFileForSite" />
+  <wsdl:message name="IDeploymentCacheOperations_AddZipFileForSite_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddZipFileForSite" />
   </wsdl:message>
-  <wsdl:message name="IDeploymentCacheOperations_GetZipFileForSite_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetZipFileForSiteResponse" />
+  <wsdl:message name="IDeploymentCacheOperations_AddZipFileForSite_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddZipFileForSiteResponse" />
   </wsdl:message>
-  <wsdl:message name="IDeploymentCacheOperations_GetZipFileForSite_DeploymentCacheFaultFault_FaultMessage">
+  <wsdl:message name="IDeploymentCacheOperations_AddZipFileForSite_DeploymentCacheFaultFault_FaultMessage">
     <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" name="detail" element="q1:DeploymentCacheFault" />
+  </wsdl:message>
+  <wsdl:message name="IDeploymentCacheOperations_AddZipFileForSiteWithUrl_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddZipFileForSiteWithUrl" />
+  </wsdl:message>
+  <wsdl:message name="IDeploymentCacheOperations_AddZipFileForSiteWithUrl_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddZipFileForSiteWithUrlResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDeploymentCacheOperations_AddZipFileForSiteWithUrl_DeploymentCacheFaultFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" name="detail" element="q2:DeploymentCacheFault" />
+  </wsdl:message>
+  <wsdl:message name="IDeploymentCacheOperations_GetSiteContents_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSiteContents" />
+  </wsdl:message>
+  <wsdl:message name="IDeploymentCacheOperations_GetSiteContents_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSiteContentsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDeploymentCacheOperations_GetSiteContents_DeploymentCacheFaultFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" name="detail" element="q3:DeploymentCacheFault" />
   </wsdl:message>
   <wsdl:message name="IDeploymentCacheOperations_RefreshCacheForSite_InputMessage">
     <wsdl:part name="parameters" element="tns:RefreshCacheForSite" />
@@ -52,7 +70,7 @@
     <wsdl:part name="parameters" element="tns:RefreshCacheForSiteResponse" />
   </wsdl:message>
   <wsdl:message name="IDeploymentCacheOperations_RefreshCacheForSite_DeploymentCacheFaultFault_FaultMessage">
-    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" name="detail" element="q2:DeploymentCacheFault" />
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" name="detail" element="q4:DeploymentCacheFault" />
   </wsdl:message>
   <wsdl:message name="IDeploymentCacheOperations_DeleteCacheForSite_InputMessage">
     <wsdl:part name="parameters" element="tns:DeleteCacheForSite" />
@@ -61,7 +79,7 @@
     <wsdl:part name="parameters" element="tns:DeleteCacheForSiteResponse" />
   </wsdl:message>
   <wsdl:message name="IDeploymentCacheOperations_DeleteCacheForSite_DeploymentCacheFaultFault_FaultMessage">
-    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" name="detail" element="q3:DeploymentCacheFault" />
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" name="detail" element="q5:DeploymentCacheFault" />
   </wsdl:message>
   <wsdl:message name="IDeploymentCacheOperations_ClearCache_InputMessage">
     <wsdl:part name="parameters" element="tns:ClearCache" />
@@ -70,7 +88,7 @@
     <wsdl:part name="parameters" element="tns:ClearCacheResponse" />
   </wsdl:message>
   <wsdl:message name="IDeploymentCacheOperations_ClearCache_DeploymentCacheFaultFault_FaultMessage">
-    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" name="detail" element="q4:DeploymentCacheFault" />
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" name="detail" element="q6:DeploymentCacheFault" />
   </wsdl:message>
   <wsdl:message name="IDeploymentCacheOperations_GetDeploymentCacheStats_InputMessage">
     <wsdl:part name="parameters" element="tns:GetDeploymentCacheStats" />
@@ -79,7 +97,7 @@
     <wsdl:part name="parameters" element="tns:GetDeploymentCacheStatsResponse" />
   </wsdl:message>
   <wsdl:message name="IDeploymentCacheOperations_GetDeploymentCacheStats_DeploymentCacheFaultFault_FaultMessage">
-    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" name="detail" element="q5:DeploymentCacheFault" />
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" name="detail" element="q7:DeploymentCacheFault" />
   </wsdl:message>
   <wsdl:message name="IDeploymentCacheOperations_TestDowloadSpeedForZip_InputMessage">
     <wsdl:part name="parameters" element="tns:TestDowloadSpeedForZip" />
@@ -88,13 +106,23 @@
     <wsdl:part name="parameters" element="tns:TestDowloadSpeedForZipResponse" />
   </wsdl:message>
   <wsdl:message name="IDeploymentCacheOperations_TestDowloadSpeedForZip_DeploymentCacheFaultFault_FaultMessage">
-    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" name="detail" element="q6:DeploymentCacheFault" />
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/DeploymentCacheLib" name="detail" element="q8:DeploymentCacheFault" />
   </wsdl:message>
   <wsdl:portType name="IDeploymentCacheOperations">
-    <wsdl:operation name="GetZipFileForSite">
-      <wsdl:input wsaw:Action="http://tempuri.org/IDeploymentCacheOperations/GetZipFileForSite" message="tns:IDeploymentCacheOperations_GetZipFileForSite_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IDeploymentCacheOperations/GetZipFileForSiteResponse" message="tns:IDeploymentCacheOperations_GetZipFileForSite_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/IDeploymentCacheOperations/GetZipFileForSiteDeploymentCacheFaultFault" name="DeploymentCacheFaultFault" message="tns:IDeploymentCacheOperations_GetZipFileForSite_DeploymentCacheFaultFault_FaultMessage" />
+    <wsdl:operation name="AddZipFileForSite">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDeploymentCacheOperations/AddZipFileForSite" message="tns:IDeploymentCacheOperations_AddZipFileForSite_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDeploymentCacheOperations/AddZipFileForSiteResponse" message="tns:IDeploymentCacheOperations_AddZipFileForSite_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IDeploymentCacheOperations/AddZipFileForSiteDeploymentCacheFaultFault" name="DeploymentCacheFaultFault" message="tns:IDeploymentCacheOperations_AddZipFileForSite_DeploymentCacheFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddZipFileForSiteWithUrl">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDeploymentCacheOperations/AddZipFileForSiteWithUrl" message="tns:IDeploymentCacheOperations_AddZipFileForSiteWithUrl_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDeploymentCacheOperations/AddZipFileForSiteWithUrlResponse" message="tns:IDeploymentCacheOperations_AddZipFileForSiteWithUrl_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IDeploymentCacheOperations/AddZipFileForSiteWithUrlDeploymentCacheFaultFault" name="DeploymentCacheFaultFault" message="tns:IDeploymentCacheOperations_AddZipFileForSiteWithUrl_DeploymentCacheFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSiteContents">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDeploymentCacheOperations/GetSiteContents" message="tns:IDeploymentCacheOperations_GetSiteContents_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDeploymentCacheOperations/GetSiteContentsResponse" message="tns:IDeploymentCacheOperations_GetSiteContents_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IDeploymentCacheOperations/GetSiteContentsDeploymentCacheFaultFault" name="DeploymentCacheFaultFault" message="tns:IDeploymentCacheOperations_GetSiteContents_DeploymentCacheFaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="RefreshCacheForSite">
       <wsdl:input wsaw:Action="http://tempuri.org/IDeploymentCacheOperations/RefreshCacheForSite" message="tns:IDeploymentCacheOperations_RefreshCacheForSite_InputMessage" />
@@ -125,8 +153,32 @@
   <wsdl:binding name="NetTcpBinding_IDeploymentCacheOperations" type="tns:IDeploymentCacheOperations">
     <wsp:PolicyReference URI="#NetTcpBinding_IDeploymentCacheOperations_policy" />
     <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
-    <wsdl:operation name="GetZipFileForSite">
-      <soap12:operation soapAction="http://tempuri.org/IDeploymentCacheOperations/GetZipFileForSite" style="document" />
+    <wsdl:operation name="AddZipFileForSite">
+      <soap12:operation soapAction="http://tempuri.org/IDeploymentCacheOperations/AddZipFileForSite" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DeploymentCacheFaultFault">
+        <soap12:fault use="literal" name="DeploymentCacheFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AddZipFileForSiteWithUrl">
+      <soap12:operation soapAction="http://tempuri.org/IDeploymentCacheOperations/AddZipFileForSiteWithUrl" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DeploymentCacheFaultFault">
+        <soap12:fault use="literal" name="DeploymentCacheFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetSiteContents">
+      <soap12:operation soapAction="http://tempuri.org/IDeploymentCacheOperations/GetSiteContents" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

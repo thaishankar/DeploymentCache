@@ -42,6 +42,11 @@ namespace StorageCacheLib
             return _diskCacheStorage.AddSite(siteName, remoteContentPath, contentType);
         }
 
+        public byte[] AddSiteWithUrlToCache(string siteName, string urlToDownloadFrom, CachedContentType contentType = CachedContentType.Zip)
+        {
+            return _diskCacheStorage.AddSiteWithUrl(siteName, urlToDownloadFrom);
+        }
+
         public void RemoveSiteFromCache(string siteName)
         {
             _diskCacheStorage.DeleteSite(siteName);

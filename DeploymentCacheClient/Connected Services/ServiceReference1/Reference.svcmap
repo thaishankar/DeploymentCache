@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="bf139a20-b4f4-4611-8c75-caa8c3932010" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="e061f024-5bf6-4780-921f-bdba260a3c47" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -22,10 +22,10 @@
     <MetadataSource Address="http://localhost:8000/DeploymentCache/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="9fd2a6b6-0377-4b9a-aa34-eedaaea2d790" SourceId="1" SourceUrl="http://localhost:8000/DeploymentCache/mex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="0da50e99-5829-4af9-ad12-5cf0f4faf6ac" SourceId="1" SourceUrl="http://localhost:8000/DeploymentCache/mex" />
-    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="a847c847-7150-458f-987c-dfc83da727f0" SourceId="1" SourceUrl="http://localhost:8000/DeploymentCache/mex" />
-    <MetadataFile FileName="DeploymentCacheLib.xsd" MetadataType="Schema" ID="69790c41-b47c-4326-a08c-703d77113b18" SourceId="1" SourceUrl="http://localhost:8000/DeploymentCache/mex" />
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="0ccdb0df-078b-4f6d-9db1-18c045a6d9dd" SourceId="1" SourceUrl="http://localhost:8000/DeploymentCache/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="1e92d3dc-8250-4996-ac00-05f4bafa2b9a" SourceId="1" SourceUrl="http://localhost:8000/DeploymentCache/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="ecee9de0-37ca-44f1-9967-483213264894" SourceId="1" SourceUrl="http://localhost:8000/DeploymentCache/mex" />
+    <MetadataFile FileName="DeploymentCacheLib.xsd" MetadataType="Schema" ID="5f4abc37-368a-4c23-9baf-375e1bda7111" SourceId="1" SourceUrl="http://localhost:8000/DeploymentCache/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

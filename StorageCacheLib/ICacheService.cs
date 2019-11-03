@@ -14,6 +14,10 @@ namespace StorageCacheLib
 
         byte[] AddSiteToCache(string siteName, string remoteContenPath, CachedContentType contentType = CachedContentType.Zip);
 
+        byte[] AddSiteWithUrlToCache(string siteName, string url, CachedContentType contentType = CachedContentType.Zip);
+
+        //byte[] RefreshWithUrlToCache(string siteName, string url, CachedContentType contentType = CachedContentType.Zip);
+
         void RemoveSiteFromCache(string siteName);
 
         void RemoveSitesFromCache(List<string> sites);
